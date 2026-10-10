@@ -157,7 +157,8 @@ button.s{background:#fff;color:#1b2a41;border:1.5px solid var(--bd)}button.s:hov
 .cb{position:relative;margin-bottom:8px}.cb .cbi{margin-bottom:0;padding-right:44px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%2314213d' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
 .cb+select{display:none}
 .cbl{display:none;position:absolute;left:0;right:0;top:calc(100% + 6px);max-height:min(300px,45vh);overflow:auto;background:#fff;border:1.5px solid var(--bd);border-radius:14px;box-shadow:0 16px 32px -14px rgba(20,33,61,.35);z-index:30}
-.cb.open .cbl{display:block}.cbo{padding:11px 16px;cursor:pointer;line-height:1.4}.cbo:hover{background:#eef2ff}.cbo.sel{background:#e8f5ef;font-weight:700}.cbn{padding:14px 16px;color:var(--mu)}
+.cb.show .cbl{display:block}.cbo{padding:11px 16px;cursor:pointer;line-height:1.4}.cbo:hover{background:#eef2ff}.cbo.sel{background:#e8f5ef;font-weight:700}.cbn{padding:14px 16px;color:var(--mu)}
+.cbi{scroll-margin-top:170px}
 </style>
 </head>
 <body>
@@ -279,16 +280,18 @@ function applyFilter(id){
  if(document.activeElement!==i)i.value=o?o[1]:"";
  i.disabled=s.disabled;
  i.placeholder=(id=="Q11"&&!ans.Q10)?"पहले सामाजिक श्रेणी (प्रश्न 10) चुनें / Select social category first":"🔍 चुनें या खोजें / Select or search";}
-function cbRender(id,qy){
+function cbRender(id,qy,first){
  const c=cbEl(id),l=c.querySelector(".cbl"),q=(qy||"").trim().toLowerCase(),cur=ans[id];
  const items=cbAll(id).filter((o,i)=>i>0&&o[0]&&(!q||o[1].toLowerCase().includes(q)));
  l.innerHTML="";
  items.forEach(o=>{const d=document.createElement("div");d.className="cbo"+(o[0]===cur?" sel":"");d.textContent=o[1];d.dataset.v=o[0];l.appendChild(d);});
  if(!items.length){const d=document.createElement("div");d.className="cbn";d.textContent="कोई परिणाम नहीं / No match";l.appendChild(d);}
- c.querySelector(".cb").classList.add("open");}
-function cbClose(id){const c=cbEl(id);c.querySelector(".cb").classList.remove("open");applyFilter(id);}
+ c.querySelector(".cb").classList.add("show");
+ const i=c.querySelector(".cbi");if(first)i.scrollIntoView({block:"start"});
+ requestAnimationFrame(()=>{const r=i.getBoundingClientRect(),vh=window.visualViewport?visualViewport.height:innerHeight,nv=document.getElementById("nav").getBoundingClientRect().height;l.style.maxHeight=Math.max(140,Math.min(320,vh-r.bottom-nv-16))+"px";});}
+function cbClose(id){const c=cbEl(id);c.querySelector(".cb").classList.remove("show");applyFilter(id);}
 function cbPick(id,v){const s=cbEl(id).querySelector("select");s.value=v;s.dispatchEvent(new Event("change",{bubbles:true}));cbEl(id).querySelector(".cbi").blur();cbClose(id);}
-f.addEventListener("focusin",e=>{const t=e.target;if(t.classList&&t.classList.contains("cbi")){const id=t.closest(".cb").dataset.cb;t.select();cbRender(id,"");}});
+f.addEventListener("focusin",e=>{const t=e.target;if(t.classList&&t.classList.contains("cbi")){const id=t.closest(".cb").dataset.cb;t.select();cbRender(id,"",true);}});
 f.addEventListener("focusout",e=>{const t=e.target;if(t.classList&&t.classList.contains("cbi"))cbClose(t.closest(".cb").dataset.cb);});
 f.addEventListener("mousedown",e=>{if(e.target.closest&&e.target.closest(".cbl"))e.preventDefault();});
 f.addEventListener("click",e=>{const d=e.target.closest&&e.target.closest(".cbo");if(d)cbPick(d.closest(".cb").dataset.cb,d.dataset.v);});
