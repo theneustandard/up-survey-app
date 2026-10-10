@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="light only">
+<meta name="theme-color" content="#315cff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>उत्तर प्रदेश सर्वेक्षण प्रश्नावली / Uttar Pradesh Survey Questionnaire</title>
+<style>
+:root{color-scheme:light;--bg:#f4f5f7;--card:#fff;--tx:#1d2330;--mu:#667085;--bd:#d6dae1;--ac:#e8590c;--acl:#fff0e6;--wr:#b42318;--wrl:#fdecea}
+
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,"Noto Sans Devanagari",sans-serif}
+main{width:100%;max-width:1280px;margin:0 auto;padding:0 clamp(12px,3vw,40px) 110px}h1{font-size:1.4rem;margin:8px 0 4px}.sub{color:var(--mu);margin:0 0 12px}
+.ins{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--ac);padding:10px 14px;border-radius:8px;font-size:.9rem}
+.open{--ob:#e6f2ff;--obd:#1c6fd1;--ot:#0b3a73;background:var(--ob);border:2px solid var(--obd);border-radius:10px;padding:12px 16px;margin-bottom:14px;color:var(--ot)}
+.open p{margin:6px 0}.otag{display:inline-block;background:var(--obd);color:#fff;font-weight:700;font-size:.85rem;padding:3px 10px;border-radius:14px;margin-bottom:4px}
+
+h2{font-size:1.05rem;margin:26px 0 8px;color:var(--ac)}
+.q{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:14px;margin-bottom:12px}
+.q.locked{opacity:.75}.q.err{border-color:var(--wr)}
+.qt{font-weight:600}.qh{color:var(--mu);margin-bottom:8px}.note{font-size:.85rem;color:var(--mu);margin:4px 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{border:1px solid var(--bd);border-radius:20px;padding:6px 12px;cursor:pointer;font-size:.92rem}
+.chip:has(input:checked){background:var(--acl);border-color:var(--ac);font-weight:600}.chip.pd:has(input:checked){background:var(--wrl);border-color:var(--wr);color:var(--wr)}
+.chip input{margin-right:6px}
+select,input[type=text],input[type=number],input[type=tel],textarea{width:100%;padding:9px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit;margin-bottom:8px}
+:disabled{cursor:not-allowed}
+button{background:var(--ac);color:#fff;border:0;border-radius:8px;padding:10px 18px;font:inherit;font-weight:600;cursor:pointer;margin:4px 6px 4px 0}
+button.s{background:var(--card);color:var(--tx);border:1px solid var(--bd)}
+.banner{display:none;position:sticky;top:8px;z-index:5;background:var(--wrl);color:var(--wr);border:1px solid var(--wr);border-radius:8px;padding:8px 12px;margin:10px 0;font-weight:600}
+pre{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:12px;overflow-x:auto;font-size:.8rem}
+#done{display:none}
+
+#top{position:sticky;top:0;z-index:10;background:var(--bg);padding:10px 0 6px;border-bottom:1px solid var(--bd)}
+#top h1{font-size:clamp(1rem,2.2vw,1.35rem);margin:0}#top .sub{margin:0 0 6px;font-size:.85rem}
+#track{height:8px;background:var(--bd);border-radius:6px;overflow:hidden}#fill{height:100%;width:0;background:var(--ac);transition:width .3s}
+#stepl{font-size:.82rem;color:var(--mu);margin-top:4px}
+.banner{top:92px}
+.pg{display:none;gap:16px;grid-template-columns:1fr;align-items:start;padding-top:6px}
+.pg.on{display:grid}.pg>h2,.pg>.open,.pg>.script,.pg>.ins,.pg>button{grid-column:1/-1}.pg>h2{margin:14px 0 0}
+.q{margin:0;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.06)}.qt{font-size:1.05rem}
+.chip{padding:10px 16px;font-size:1rem}select,input[type=text],input[type=number],input[type=tel],textarea{padding:12px;font-size:1rem}
+select:focus,input:focus,textarea:focus{outline:2px solid var(--ac);outline-offset:1px}
+#nav{position:fixed;left:0;right:0;bottom:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card);border-top:1px solid var(--bd);padding:10px clamp(12px,3vw,40px) calc(10px + env(safe-area-inset-bottom,0px))}
+#nav button{margin:0;min-width:130px;padding:12px 20px}#nav button:disabled{opacity:.4}#stp{color:var(--mu);font-size:.9rem;text-align:center}
+#sub{padding:14px 28px;font-size:1.05rem}
+.script{--ob:#e7f7ed;--obd:#1f8f4e;--ot:#0e3b22;background:var(--ob);border:2px solid var(--obd);border-radius:10px;padding:10px 16px;color:var(--ot)}
+.script p{margin:6px 0}.script .otag{background:var(--obd)}
+.idt{color:var(--mu);font-weight:400;font-size:.7rem;border:1px solid var(--bd);border-radius:6px;padding:0 5px;margin-left:4px}
+
+
+/* ===== PREMIUM THEME ===== */
+:root{--bg:#f2f7f4;--card:#fff;--tx:#14213d;--mu:#6b7385;--bd:#dbe7df;--ac:#1b8a53;--acl:#e8f6ee;--navy:#14213d;--navy2:#24376b;--gold:#3fc07e;--wr:#b42318;--wrl:#fdecea}
+body{font-family:"Plus Jakarta Sans","Noto Sans Devanagari",system-ui,sans-serif;-webkit-font-smoothing:antialiased;background:radial-gradient(1100px 420px at 50% -140px,#d3eadc,transparent),var(--bg);background-attachment:fixed}
+h1,h2,.pg>h2{font-family:"DM Serif Display","Noto Serif Devanagari",Georgia,serif;font-weight:400;color:var(--navy)}
+#top{background:rgba(242,247,244,.88);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd);padding:14px 0 10px}
+#top h1{font-size:clamp(1.1rem,2.4vw,1.6rem);letter-spacing:.01em}
+#top .sub{color:var(--ac);font-weight:600;letter-spacing:.04em;font-size:.8rem;text-transform:uppercase}
+#track{height:6px;background:#d9eadf}#fill{background:linear-gradient(90deg,var(--gold),var(--ac));border-radius:6px}
+#stepl{text-transform:uppercase;letter-spacing:.08em;font-size:.72rem;font-weight:600;color:var(--mu)}
+.pg.on{animation:fi .35s ease}@keyframes fi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.pg>h2{font-size:clamp(1.25rem,2.4vw,1.6rem);margin:18px 0 0;line-height:1.25}
+.pg>h2::after{content:"";display:block;width:46px;height:3px;border-radius:3px;background:var(--gold);margin-top:10px}
+.q{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:24px;box-shadow:0 1px 2px rgba(20,33,61,.05),0 14px 30px -18px rgba(20,33,61,.22);transition:box-shadow .2s,border-color .2s}
+.q:hover{box-shadow:0 1px 2px rgba(20,33,61,.06),0 18px 36px -16px rgba(20,33,61,.28)}
+.q.err{border-color:var(--wr);box-shadow:0 0 0 4px rgba(180,35,24,.12)}.q.locked{opacity:.55;filter:grayscale(.6)}
+.qt{display:flex;align-items:flex-start;gap:12px;font-size:1.08rem;font-weight:600;color:var(--navy);line-height:1.4}
+.qn{flex:none;min-width:30px;height:30px;padding:0 10px;border-radius:15px;background:var(--navy);color:#fff;font-size:.82rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-top:-1px}
+.qh{margin:6px 0 14px 42px;color:var(--mu);font-size:.97rem}.note{margin-left:42px}
+.q .chips,.q select,.q input[type=text],.q input[type=number],.q input[type=tel],.q textarea{margin-left:0}
+.chips{gap:10px}.chip{position:relative;background:#fff;border:1.5px solid var(--bd);border-radius:12px;padding:11px 18px;font-size:.98rem;transition:all .15s}
+.chip:hover{border-color:var(--navy2);transform:translateY(-1px)}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip:has(input:checked){background:var(--navy);border-color:var(--navy);color:#fff;font-weight:600;box-shadow:0 6px 14px -6px rgba(20,33,61,.5)}
+.chip:has(input:checked)::before{content:"✓ "}
+.chip.pd:has(input:checked){background:var(--wr);border-color:var(--wr);color:#fff}
+select,input[type=text],input[type=number],input[type=tel],textarea{background:#fff;border:1.5px solid var(--bd);border-radius:12px;padding:14px;font-family:inherit;color:var(--navy);transition:border-color .15s,box-shadow .15s}
+select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%2314213d' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:42px}
+select:focus,input:focus,textarea:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 4px rgba(27,138,83,.22)}
+::placeholder{color:#a3a9b8}
+button{font-family:inherit;border-radius:12px;background:linear-gradient(135deg,var(--navy),var(--navy2));box-shadow:0 8px 18px -8px rgba(20,33,61,.55);transition:transform .15s,box-shadow .15s;letter-spacing:.01em}
+button:hover{transform:translateY(-1px)}button.s{background:#fff;color:var(--navy);border:1.5px solid var(--bd);box-shadow:none}
+#sub,#done div>button:not(.s){background:linear-gradient(135deg,#2fb774,#1b8a53);color:#fff}
+#nav{background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--bd);box-shadow:0 -10px 30px -18px rgba(20,33,61,.3)}
+#nav button.s{box-shadow:none}
+.open{background:linear-gradient(135deg,#14213d,#24376b);color:#eaf6ef;border:none;border-radius:20px;padding:24px 28px;box-shadow:0 18px 36px -20px rgba(20,33,61,.7)}
+.open p{line-height:1.7}.open .otag{background:var(--gold);color:var(--navy)}
+.ins{background:#fff;border:1px solid var(--bd);border-left:5px solid var(--gold);border-radius:14px;padding:16px 20px;line-height:1.7}
+.script{background:var(--acl);border:1px solid #bde2cc;border-left:5px solid var(--gold);border-radius:14px;padding:14px 20px;color:#0d3a24}
+.script .otag{background:var(--ac);color:#fff}.script p{line-height:1.7}
+.otag{border-radius:20px;letter-spacing:.03em;font-size:.78rem}
+.banner{border-radius:14px;box-shadow:0 8px 20px -12px rgba(180,35,24,.5)}
+.idt{background:#eaf3ee;border:none;color:var(--mu);border-radius:6px}
+
+/* ===== NEU THEME (#315cff) ===== */
+:root{--bg:#f5f7fc;--bd:#e1e6f2;--ac:#315cff;--acl:#eef2ff;--gold:#6f8fff;--navy:#0f1a3d;--navy2:#315cff}
+body{background:radial-gradient(1100px 420px at 50% -140px,#dfe6ff,transparent),var(--bg);background-attachment:fixed}
+#top{background:rgba(245,247,252,.88)}#track{background:#dfe6fa}#fill{background:linear-gradient(90deg,#6f8fff,#315cff)}
+.qn{background:#315cff}
+.chip:has(input:checked){background:#315cff;border-color:#315cff;box-shadow:0 8px 16px -8px rgba(49,92,255,.6)}
+button{background:linear-gradient(135deg,#4a72ff,#315cff);box-shadow:0 10px 20px -10px rgba(49,92,255,.7)}
+button.s{background:#fff;color:#0f1a3d;box-shadow:none}
+#sub,#done div>button:not(.s){background:linear-gradient(135deg,#4a72ff,#315cff)}
+.open{background:linear-gradient(135deg,#1f3fd1,#315cff);color:#fff}.open .otag{background:#fff;color:#315cff}
+.script{background:#eef2ff;border:1px solid #cdd8ff;border-left:5px solid #315cff;color:#14224f}.script .otag{background:#315cff;color:#fff}
+.ins{border-left-color:#315cff}
+select:focus,input:focus,textarea:focus{border-color:#315cff;box-shadow:0 0 0 4px rgba(49,92,255,.18)}
+.idt{background:#eef1fb}
+
+/* ===== NEU MATCH (Inter, lavender bg, blue-top cards, teal hero, mint selected) ===== */
+:root{--bg:#f4f5fb;--tx:#1f2d3d;--mu:#667085;--bd:#e1e5f2;--ac:#315cff;--acl:#eef0fd;--mint:#e8f5ef;--mintbd:#b9dcc9;--green:#2f7d5b}
+body{font-family:Inter,"Noto Sans Devanagari",system-ui,sans-serif;background:var(--bg);color:var(--tx)}
+h1,h2,.pg>h2{font-family:Inter,"Noto Sans Devanagari",sans-serif;font-weight:700;letter-spacing:-.02em;color:#1b2a41}
+.pg>h2::after{content:none}.pg>h2{font-size:clamp(1.3rem,2.6vw,1.75rem);margin:22px 0 2px}
+main{max-width:1180px}
+#top{top:0;background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none;border:1px solid var(--bd);border-top:none;border-radius:0 0 22px 22px;padding:14px 22px 0;overflow:hidden}
+#top h1{font-size:clamp(1.05rem,2.2vw,1.4rem);color:#315cff;letter-spacing:-.02em}
+#top .sub{font-size:.7rem;letter-spacing:.16em;color:var(--mu);font-weight:500}
+#track{margin-top:6px;margin-bottom:0}#fill{background:linear-gradient(90deg,#315cff,#4a9a8a)}
+#stepl{background:var(--acl);color:#315cff;text-align:center;padding:8px 10px;margin:8px -22px 0;letter-spacing:.06em;font-size:.72rem}
+.banner{top:104px}
+.q{background:#fff;border:1px solid var(--bd);border-top:3px solid #315cff;border-radius:24px;padding:26px 28px;box-shadow:0 1px 2px rgba(20,33,61,.04)}
+.q:nth-child(even){border-top-color:#4a9a8a}.q:hover{box-shadow:0 10px 26px -16px rgba(49,92,255,.4)}
+.qt{display:block;font-size:1.12rem;font-weight:700;color:#1b2a41;letter-spacing:-.01em;line-height:1.45}
+.qn{display:inline;background:none;color:#315cff;min-width:0;height:auto;padding:0;font-size:inherit;margin:0 4px 0 0}
+.qh{margin:4px 0 14px;color:var(--mu)}.note{margin-left:0}
+.chip{border-radius:14px;border:1.5px solid #dfe4f1;background:#fafbff;padding:12px 18px;font-weight:500}
+.chip:hover{border-color:#315cff;background:#fff;transform:none}
+.chip:has(input:checked){background:var(--mint);border-color:#7fc2a1;color:var(--green);font-weight:700;box-shadow:none}
+.chip.pd:has(input:checked){background:#fdecea;border-color:#b42318;color:#b42318}
+select,input[type=text],input[type=number],input[type=tel],textarea{background:#fafbff;border:1.5px solid #dfe4f1;border-radius:16px;padding:15px 16px;color:#1f2d3d}
+select:focus,input:focus,textarea:focus{border-color:#315cff;box-shadow:0 0 0 4px rgba(49,92,255,.14);background:#fff}
+button{background:#315cff;border-radius:14px;box-shadow:none;font-weight:600}button:hover{background:#2748d9;transform:none}
+button.s{background:#fff;color:#1b2a41;border:1.5px solid var(--bd)}button.s:hover{background:#f7f8fe}
+#sub,#done div>button:not(.s){background:#315cff}
+#nav{background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none}
+.open{position:relative;overflow:hidden;background:#2f6b68;color:#fff;border:none;border-radius:24px;padding:28px 32px;box-shadow:none}
+.open::before{content:"";position:absolute;right:-60px;top:-80px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.07)}
+.open::after{content:"";position:absolute;right:90px;top:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.06)}
+.open>*{position:relative;z-index:1}.open p{color:#e9f4f1;line-height:1.75}
+.open .otag,.script .otag{border-radius:8px;letter-spacing:.12em;text-transform:uppercase;font-size:.7rem;padding:5px 12px;font-weight:600}
+.open .otag{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);color:#fff}
+.script{background:var(--mint);border:1px solid var(--mintbd);border-radius:20px;padding:16px 22px;color:#1d5a40}
+.script .otag{background:#fff;color:var(--green);border:1px solid var(--mintbd)}
+.ins{background:#fff;border:1px solid var(--bd);border-radius:20px}
+.idt{background:#eef0fa;color:#667085;border-radius:8px}
+.open p:last-of-type,.script p:last-of-type{font-weight:700}
+.qt{font-weight:400}.qt .qn{font-weight:700}.qh{font-weight:700;color:var(--tx);font-size:1.05rem}
+.qh{margin:0 0 4px;line-height:1.45}.qt{margin:0 0 14px;font-size:1rem;color:var(--mu);line-height:1.45}
+.open p:last-of-type,.script p:last-of-type{font-weight:400}.open p:nth-of-type(2),.script p:first-of-type,#done .q>p:first-of-type{font-weight:700}
+.note b{color:var(--tx);font-weight:700}
+</style>
+</head>
+<body>
+<main>
+<div id="top"><h1>उत्तर प्रदेश सर्वेक्षण प्रश्नावली / Uttar Pradesh Survey Questionnaire</h1><div id="track"><div id="fill"></div></div><div id="stepl"></div></div>
+<div class="open"><div class="otag">📣 प्रारंभिक स्क्रिप्ट / Opening Script</div>
+<p><b>हिंदी में प्रारंभिक स्क्रिप्ट</b></p>
+<p>नमस्ते! मेरा नाम ________ है। मैं लखनऊ विश्वविद्यालय के राजनीति विज्ञान विभाग का/की छात्र/छात्रा हूँ। अपने कॉलेज असाइनमेंट के तहत मैं उत्तर प्रदेश के वर्तमान राजनीतिक परिदृश्य और राजनीतिक एवं स्थानीय मुद्दों पर लोगों की राय जानने के लिए एक छोटा-सा सर्वे कर रहा/रही हूँ। इसमें सिर्फ 2 मिनट लगेंगे और आपकी कोई भी व्यक्तिगत जानकारी स्टोर नहीं की जाएगी। क्या मैं आपसे दो मिनट बात करके कुछ सवाल पूछ सकता/सकती हूँ?</p>
+<p><b>English Opening Script</b></p>
+<p>Hello, Namaste! I’m ________, a student of the Political Science Department at the University of Lucknow. As part of my college assignment, I’m conducting a short survey to understand the current political scenario in Uttar Pradesh and people’s opinions on political and local issues. It will take just 2 minutes, and your personal information will not be stored. Could I speak with you for two minutes and ask you a few questions?</p></div>
+<div class="ins">प्रत्येक प्रश्न को दिए गए प्रारूप के अनुसार पूछें। / Ask each question exactly as written.<br>कॉल डिस्कनेक्ट होने पर <b>फ़ोन डिस्कनेक्ट है / Phone Disconnected</b> चुनें — आगे के सभी प्रश्न और सर्वेक्षण स्थिति अपने-आप वही हो जाएंगे।<br>If the call disconnects, choose <b>Phone Disconnected</b> — all following questions and the survey status are set to it automatically.</div>
+<div class="banner" id="banner">📵 फ़ोन डिस्कनेक्ट है — शेष प्रश्न लॉक हैं / Phone Disconnected — remaining questions are locked</div>
+<form id="f" onsubmit="return false"></form>
+<div id="done">
+<h2>समापन संदेश / CLOSING STATEMENT</h2>
+<div class="q"><p>इस सर्वेक्षण में भाग लेने और मेरे प्रश्नों के उत्तर देने के लिए आपका बहुत-बहुत धन्यवाद। आपका दिन शुभ हो!</p>
+<p>Thank you very much for participating in this survey and answering my questions. Have a good day!</p></div>
+<div class="q" id="saveMsg">सहेजा जा रहा है… / Saving…</div><button id="retry" style="display:none" onclick="saveNow()">दोबारा सहेजें / Retry saving</button><div id="fb" style="display:none"><p class="note">Saving failed — download a backup copy / सहेजना विफल — बैकअप डाउनलोड करें</p><button class="s" onclick="dl('json')">Download JSON</button><button class="s" onclick="dl('csv')">Download CSV</button></div>
+<div style="text-align:center;margin:18px 0"><button style="padding:14px 32px;font-size:1.1rem" onclick="location.reload()">नया सर्वेक्षण शुरू करें / Start New Survey</button></div>
+</div>
+</main>
+<nav id="nav"><button class="s" id="bk">← पीछे / Back</button><span id="stp"></span><button id="nx">आगे / Next →</button></nav>
+<script src="config.js"></script>
+<script>
+const PD="Phone Disconnected",PDH="फ़ोन डिस्कनेक्ट है",PNA="Prefer Not to Answer|उत्तर नहीं देना चाहते";
+const PDO=PD+"|"+PDH;
+const parties=["भारतीय जनता पार्टी (Bharatiya Janata Party — BJP)|","समाजवादी पार्टी (Samajwadi Party — SP)|","बहुजन समाज पार्टी (Bahujan Samaj Party — BSP)|","राष्ट्रीय लोक दल (Rashtriya Lok Dal — RLD)|","भारतीय राष्ट्रीय कांग्रेस (Indian National Congress — INC)|","अन्य दल (Other Parties)|"];
+const vote=(x)=>[...parties,...x];
+const cm=[["Yogi Adityanath (BJP)","योगी आदित्यनाथ (भाजपा)"],["Keshav Prasad Maurya (BJP)","केशव प्रसाद मौर्य (भाजपा)"],["Brajesh Pathak (BJP)","ब्रजेश पाठक (भाजपा)"],["Akhilesh Yadav (SP)","अखिलेश यादव (सपा)"],["Mayawati (BSP)","मायावती (बसपा)"],["Aradhana Misra (Mona) (INC)","आराधना मिश्रा (मोना) (कांग्रेस)"],["Ajay Rai (INC)","अजय राय (कांग्रेस)"],["Jayant Chaudhary (RLD)","जयंत चौधरी (रालोद)"],["Anupriya Patel (Apna Dal (S))","अनुप्रिया पटेल (अपना दल (एस))"],["Om Prakash Rajbhar (SBSP)","ओम प्रकाश राजभर (सुभासपा)"],["Sanjay Nishad (NISHAD Party)","संजय निषाद (निषाद पार्टी)"],["Chandrashekhar Azad (ASP (K))","चंद्रशेखर आज़ाद (आज़ाद समाज पार्टी)"],["Pallavi Patel (Apna Dal (Kamerawadi))","पल्लवी पटेल (अपना दल (कमेरावादी))"],["Pankaj Niranjan (Apna Dal (Kamerawadi))","पंकज निरंजन (अपना दल (कमेरावादी))"],["Asaduddin Owaisi (AIMIM)","असदुद्दीन ओवैसी (एआईएमआईएम)"],["Sanjay Singh (AAP)","संजय सिंह (आप)"],["Chirag Paswan (LJP (Ram Vilas))","चिराग पासवान (लोजपा (राम विलास))"],["Akash Anand (BSP)","आकाश आनंद (बसपा)"],["Shivpal Singh Yadav (SP)","शिवपाल सिंह यादव (सपा)"],["Satish Chandra Mishra (BSP)","सतीश चंद्र मिश्रा (बसपा)"],["Other","अन्य"],["Don't Know","पता नहीं"],[PNA.split("|")[0],PNA.split("|")[1]]];
+const O=s=>s.split("|"); // en|hi
+const dk=["Did not vote|वोट नहीं दिया","Don't Remember|याद नहीं",PNA];
+// kind: rad (chips) | sel (dropdown) | in (typed input + chips)
+const S=[
+{t:"SECTION 1: SCREENER|खंड 1: प्रारंभिक जानकारी", sc:["Thank you! Before we begin, I just need to confirm one quick thing.", "धन्यवाद! शुरू करने से पहले मुझे बस एक छोटी-सी बात की पुष्टि करनी है।"], q:[
+{agent:1,id:"Q0",en:"Phone Number",hi:"फ़ोन नंबर",note:"जिस 10 अंकों के मोबाइल नंबर पर कॉल की गई है, वह दर्ज करें। / Enter the 10-digit mobile number that was dialled.",k:"in",inp:"tel",ph:"10 अंकों का मोबाइल नंबर / 10-digit mobile number",o:[]},
+{id:"Q1",en:"Are you from the Raniganj Assembly Constituency?",hi:"क्या आप रानीगंज विधानसभा क्षेत्र के निवासी हैं?",k:"rad",o:["Yes|हाँ","No|नहीं"]}
+]},
+{t:"SECTION 2: YOUR AREA|खंड 2: आपका क्षेत्र", sc:["Thank you. Let's start with your area. Every area has different needs, and your answer helps show what matters most to people like you.", "धन्यवाद। सबसे पहले आपके क्षेत्र की बात करते हैं। हर क्षेत्र की ज़रूरतें अलग होती हैं, और आपके जवाब से पता चलता है कि आप जैसे लोगों के लिए सबसे ज़रूरी क्या है।"], q:[
+{id:"Q12",en:"What is the most important issue you face in your Assembly Constituency?",hi:"आपके विधानसभा क्षेत्र की सबसे बड़ी समस्या क्या है?",k:"sel",other:1,o:["Unemployment|बेरोज़गारी","Inflation|महँगाई","Roads and Infrastructure|सड़कें एवं बुनियादी ढाँचा","Electricity Supply|बिजली की आपूर्ति","Water Supply|पानी की आपूर्ति","Healthcare|स्वास्थ्य सेवाएँ","Education|शिक्षा","Law and Order|कानून-व्यवस्था","Agriculture and Farmers' Issues|कृषि एवं किसानों की समस्याएँ","Corruption|भ्रष्टाचार","Other|अन्य"]}
+]},
+{t:"SECTION 3: POLITICAL OPINION|खंड 3: राजनीतिक राय", sc:["Thank you, that was helpful. Now a few questions on the political situation in Uttar Pradesh. There are no right or wrong answers; we only want your honest opinion, and this takes about a minute.", "धन्यवाद, यह बहुत मददगार रहा। अब उत्तर प्रदेश की राजनीतिक स्थिति पर कुछ सवाल हैं। यहाँ कोई जवाब सही या गलत नहीं है; हमें सिर्फ़ आपकी सच्ची राय जाननी है, और इसमें लगभग एक मिनट लगेगा।"], q:[
+{id:"Q6",en:"If Uttar Pradesh Assembly elections were held today, which political party would you vote for?",hi:"यदि आज उत्तर प्रदेश विधानसभा चुनाव हों, तो आप किस राजनीतिक दल को वोट देना चाहेंगे?",k:"sel",o:vote(["Undecided|अभी तय नहीं किया है",PNA])},
+{id:"Q7",en:"Whom would you like to see as the Chief Minister of Uttar Pradesh after the next Assembly elections?",hi:"अगले विधानसभा चुनाव के बाद आप उत्तर प्रदेश के मुख्यमंत्री के रूप में किसे देखना चाहेंगे?",k:"sel",o:cm.map(x=>x.join("|")),other:1},
+{id:"Q8",en:"How satisfied are you with the work of the BJP government in Uttar Pradesh?",hi:"आप उत्तर प्रदेश में भाजपा सरकार के कामकाज से कितने संतुष्ट हैं?",k:"rad",o:["Very Satisfied (1)|बहुत संतुष्ट","Partially Satisfied (2)|आंशिक रूप से संतुष्ट","Partially Dissatisfied (3)|आंशिक रूप से असंतुष्ट","Dissatisfied (4)|असंतुष्ट"]},
+{id:"Q13",en:"In your opinion, who is the most prominent leader in the BJP?",hi:"आपकी राय में भाजपा का सबसे प्रमुख नेता कौन है?",k:"in",inp:"text",ph:"नेता का नाम / Leader's Name",o:[]},
+{id:"Q14",en:"In your opinion, who is the most prominent leader in the SP?",hi:"आपकी राय में समाजवादी पार्टी (सपा) का सबसे प्रमुख नेता कौन है?",k:"in",inp:"text",ph:"नेता का नाम / Leader's Name",o:[]}
+]},
+{t:"SECTION 4: PAST VOTING|खंड 4: पिछला मतदान", sc:["Just two quick questions about your earlier votes. They help us understand how opinions have changed over time. A rough answer is fine, and you can say \"I don't remember\".", "आपके पिछले मतदान के बारे में बस दो छोटे सवाल हैं। इनसे समझने में मदद मिलती है कि समय के साथ लोगों की राय कैसे बदली है। मोटा-मोटा जवाब भी चलेगा, और याद न हो तो आप \"याद नहीं\" कह सकते हैं।"], q:[
+{id:"Q4",en:"Which political party did you vote for in the 2024 Lok Sabha elections?",hi:"आपने 2024 के लोकसभा चुनाव में किस राजनीतिक दल को वोट दिया था?",note:"सांसद (MP) चुनने के लिए हुए चुनाव में। / If necessary, clarify: The election to choose Members of Parliament (MPs).",k:"sel",o:vote(dk)},
+{id:"Q5",en:"Which political party did you vote for in the 2022 Uttar Pradesh Legislative Assembly elections?",hi:"आपने 2022 के उत्तर प्रदेश विधानसभा चुनाव में किस राजनीतिक दल को वोट दिया था?",note:"विधायक (MLA) चुनने के लिए हुए चुनाव में। / If necessary, clarify: The election to choose MLAs.",k:"sel",o:vote(dk)}
+]},
+{t:"SECTION 5: ABOUT YOU|खंड 5: आपके बारे में", sc:["Almost done, thank you for your patience. The last few questions are about you. They are used only to group answers together, and you are free to skip any of them.", "बस लगभग हो गया, आपके धैर्य के लिए धन्यवाद। आख़िरी कुछ सवाल आपके बारे में हैं। इनका उपयोग सिर्फ़ जवाबों को समूहों में बाँटने के लिए होता है, और आप किसी भी सवाल को छोड़ सकते हैं।"], q:[
+{id:"Q3",en:"Could you please tell me your age?",hi:"क्या आप अपनी आयु बता सकते हैं?",note:"उत्तर न देने पर 99 दर्ज करें। / If the respondent does not answer, enter 99.",k:"in",inp:"number",ph:"आयु (Years / वर्ष) / Age",o:["99|उत्तर नहीं दिया"]},
+{id:"Q9",en:"Could you please tell me your religion?",hi:"क्या आप अपना धर्म बता सकते हैं?",k:"sel",o:["Hindu|हिंदू","Muslim|मुस्लिम","Christian|ईसाई","Sikh|सिख","Buddhist|बौद्ध","Jain|जैन","Other|अन्य",PNA]},
+{id:"Q10",en:"Could you please tell me your social category?",hi:"क्या आप अपनी सामाजिक श्रेणी बता सकते हैं?",k:"rad",o:["General|सामान्य वर्ग","OBC|अन्य पिछड़ा वर्ग","SC|अनुसूचित जाति","ST|अनुसूचित जनजाति","Other|अन्य",PNA]},
+{id:"Q11",en:"Could you please tell me your caste?",hi:"क्या आप अपनी जाति बता सकते हैं?",k:"sel",other:1,o:[]}
+]},
+{t:"SECTION 6: SURVEY AGENT DETAILS|खंड 6: सर्वेक्षण एजेंट का विवरण", q:[
+{agent:1,id:"Q2",en:"Gender",hi:"लिंग",note:"उत्तरदाता की आवाज़ के आधार पर सर्वेक्षण एजेंट द्वारा भरा जाए। / To be filled in by the survey agent based on the respondent's voice.",k:"rad",o:["Male|पुरुष","Female|महिला","Other|अन्य"]}
+]},
+];
+const STAT=["Completed|पूरा हुआ","Partially Completed|आंशिक रूप से पूरा हुआ","Respondent Refused|उत्तरदाता ने मना किया","No Response|कोई उत्तर नहीं मिला",PDO,"Call Back Required|दोबारा कॉल करना है","Other|अन्य"];
+const SO="Screened Out - Not from Raniganj";const startedAt=new Date();const ans={},auto={},oth={};let QS=[],statusAuto=false,statusPrev="";
+const f=document.getElementById("f");
+const lab=o=>o[1]?o[1]+" / "+o[0]:o[0];
+const esc=s=>s.replace(/"/g,"&quot;");
+let h="",dn=0;
+S.forEach(sec=>{const[a,b]=sec.t.split("|");h+=`<h2>${b}<br>${a}</h2>`;if(sec.sc)h+=`<div class="script"><div class="otag">📣 बोलें / Say</div><p>${sec.sc[1]}</p><p>${sec.sc[0]}</p></div>`;
+sec.q.forEach(q=>{QS.push(q);
+const opts=[...q.o.map(O),O(PDO)];
+let c="";
+if(q.k=="sel"){c=`<select data-q="${q.id}"><option value="">— चुनें / Select —</option>${opts.map(o=>{const v=o[0]; const sp=o[0]==PD; return `<option value="${esc(v)}">${lab(o)}</option>`}).join("")}</select>`;
+ if(q.other)c+=`<input type="text" data-oth="${q.id}" placeholder="कृपया बताएं / Please specify" style="display:none">`;}
+else{ if(q.k=="in")c+=`<input type="${q.inp}" ${q.inp=="number"?'min="1" max="99"':""} data-in="${q.id}" placeholder="${q.ph}">`;
+ c+=`<div class="chips">${opts.map(o=>`<label class="chip ${o[0]==PD?"pd":""}"><input type="radio" name="${q.id}" value="${esc(o[0])}">${lab(o)}</label>`).join("")}</div>`;}
+h+=`<div class="q" id="c${q.id}"><div class="qh"><span class="qn">${q.agent?"👤 Agent":(++dn)+"."}</span> ${q.hi}</div><div class="qt">${q.en} <small class="idt">${q.id}</small></div>${q.note?`<div class="note">${q.note.replace(/^(.*?) \/ (.*)$/s,"<b>$1</b> / $2")}</div>`:""}${c}</div>`;});});
+h+=`<div class="q" id="cQ15"><div class="qh"><span class="qn">👤 Agent</span> प्रश्न 15. अपनी एजेंट आईडी दर्ज करें।</div><div class="qt">Q15. Enter your Agent ID.</div><input type="tel" id="agent" inputmode="numeric" maxlength="3" pattern="[0-9]{3}" placeholder="3-digit Agent ID / 3 अंकों की एजेंट आईडी"></div>
+<div class="q"><div class="qh"><span class="qn">👤 Agent</span> एजेंट की टिप्पणी।</div><div class="qt">Q16. Agent Remarks.</div><textarea id="remarks" rows="3" placeholder="टिप्पणी / Remarks"></textarea></div>
+<button id="sub">जमा करें / Submit</button>`;
+f.innerHTML=h;
+let pages=[],cp=0,lastK="";
+(function(){let cur=null;[...f.children].forEach(n=>{if(n.tagName=="H2"&&!/SURVEY STATUS/.test(n.textContent)){cur=document.createElement("section");cur.className="pg";f.appendChild(cur);pages.push(cur);}cur.appendChild(n);});
+ const intro=document.createElement("section");intro.className="pg";intro.appendChild(document.querySelector(".open"));intro.appendChild(document.querySelector(".main>.ins")||document.querySelector("main>.ins"));
+ f.insertBefore(intro,f.firstChild);pages.unshift(intro);})();
+const TITLES=["परिचय / Introduction","प्रारंभिक / Screener","आपका क्षेत्र / Your area","राजनीतिक राय / Political opinion","पिछला मतदान / Past voting","आपके बारे में / About you","एजेंट विवरण / Agent details"];
+function showPage(i){cp=Math.max(0,Math.min(pages.length-1,i));pages.forEach((x,k)=>x.classList.toggle("on",k==cp));
+ document.getElementById("fill").style.width=((cp+1)/pages.length*100)+"%";
+ document.getElementById("stepl").textContent="Step "+(cp+1)+" of "+pages.length+" — "+TITLES[cp];
+ document.getElementById("stp").textContent=(cp+1)+" / "+pages.length;
+ document.getElementById("bk").disabled=cp==0;document.getElementById("nx").style.visibility=cp==pages.length-1?"hidden":"visible";
+ window.scrollTo({top:0,behavior:"smooth"});}
+document.getElementById("bk").onclick=()=>showPage(cp-1);document.getElementById("nx").onclick=()=>showPage(cp+1);
+showPage(0);
+
+function pdIdx(){return QS.findIndex(q=>ans[q.id]===PD&&!auto[q.id]);}
+const CASTE={
+General:"Thakur,Brahmin,Baniya,Kayastha,Jain,Bhumihar,Punjabi,Tyagi,Goswami,Giri,Buddhist,Christian,Sonar,Rod,Agrahari",
+OBC:"Jat,Shakya/Maurya/Kushwaha,Lodhi,Pal/Gadariya/Dhangar,Yadav,Kashyap/Nishad,Gujjar,Kumhar/Vishwakarma,Khadagvanshi,Kurmi/Sainthwar,Loniya/Noniya,Nai,Teli,Chaurasiya,Badhai,Darzi,Dheemar/Dhiman,Goswami,Mali,Rajbhar,Lohar,Bhurji,Saini,Arakh,Sonar,Jogi,Baniya [OBC],Halwai,Chippi,Kalwar,Basor,Bairagi,Kamboj",
+SC:"Jatav,Valmiki,Khatik/Sonkar,Dhobi,Koli,Kori,Pasi,Aheriya,Kanjar,Dom,Dhanuk,Katheria,Sankhwar,Musahar,Nat,Kol,Beldar,Ahirwar,Raikwar,Barar,Bainswar",
+ST:"Gond,Tharu,Kharwar,Sahariya,Baiga"};
+function fillCaste(){
+ const c=ans.Q10,s=document.querySelector("#cQ11 select");
+ let list=CASTE[c]?CASTE[c].split(","):[];
+ if(c==="Other"||ans.Q9==="Muslim")list.push("Muslim");
+ list=[...new Set(list)].sort();
+ const key=(c||"none")+"#"+list.join("|");
+ if(s.dataset.key!==key){s.dataset.key=key;
+  s.innerHTML=`<option value="">${c?"— Select / चुनें —":"— पहले सामाजिक श्रेणी (प्रश्न 10) चुनें / Select social category (Q10) first —"}</option>`+
+  list.map(x=>`<option value="${esc(x)}">${x}</option>`).join("")+
+  `<option value="Other">अन्य / Other (specify)</option><option value="${PNA.split("|")[0]}">${lab(O(PNA))}</option><option value="${PD}">${lab(O(PDO))}</option>`;}
+ if(!auto.Q11&&ans.Q11&&ans.Q11!==PD&&![...s.options].some(o=>o.value===ans.Q11))ans.Q11="";
+}
+function sync(){
+ fillCaste();
+ const p=pdIdx(),ni=(p<0&&ans.Q1==="No"&&!auto.Q1)?QS.findIndex(q=>q.id=="Q1"):-1;
+ QS.forEach((q,i)=>{
+  if(p>=0&&i>p){ans[q.id]=PD;auto[q.id]=true;}
+  else if(ni>=0&&i>ni&&!q.agent){ans[q.id]=SO;auto[q.id]=true;}
+  else if(auto[q.id]){ans[q.id]="";auto[q.id]=false;}
+  const card=document.getElementById("c"+q.id),lock=!!auto[q.id],v=ans[q.id]||"";
+  card.classList.toggle("locked",lock);
+  card.querySelectorAll("input[type=radio]").forEach(r=>{r.checked=r.value===v;r.disabled=lock;});
+  const s=card.querySelector("select");if(s){s.value=v;s.disabled=lock||(q.id=="Q11"&&!ans.Q10);}
+  const t=card.querySelector("[data-in]");if(t){t.value=(v===PD||!v||isNaN(v)&&q.inp=="number"||card.querySelector(`input[type=radio][value="${CSS.escape?v:v}"]`)&&q.inp=="text"&&v===PNA.split("|")[0])?"":v;t.disabled=lock;}
+  const ot=card.querySelector("[data-oth]");if(ot){ot.style.display=v==="Other"?"block":"none";ot.disabled=lock;if(lock)ot.value="";}
+ });
+ const k=p>=0?"p":ni>=0?"n":"";if(k&&k!==lastK)showPage(pages.length-1);lastK=k;
+ const bn=document.getElementById("banner");bn.style.display=(p>=0||ni>=0)?"block":"none";bn.textContent=ni>=0?"🚫 रानीगंज निवासी नहीं — सर्वेक्षण समाप्त। कृपया एजेंट विवरण भरें। / Not a Raniganj resident — survey ended. Please fill the agent details.":"📵 फ़ोन डिस्कनेक्ट है — शेष प्रश्न लॉक हैं / Phone Disconnected — remaining questions are locked";
+}
+f.addEventListener("change",e=>{const t=e.target;
+ if(t.type=="radio"){ans[t.name]=t.value;sync();}
+ else if(t.matches("select[data-q]")){ans[t.dataset.q]=t.value;sync();}});
+f.addEventListener("input",e=>{const t=e.target;
+ if(t.dataset.in){if(t.dataset.in=="Q0")t.value=t.value.replace(/\D/g,"").slice(0,10);ans[t.dataset.in]=t.value.trim();
+  const card=document.getElementById("c"+t.dataset.in);card.querySelectorAll("input[type=radio]").forEach(r=>r.checked=r.value===ans[t.dataset.in]);
+  if(ans[t.dataset.in]===""){}
+  const pd=pdIdx();if(pd>=0||Object.values(auto).some(x=>x))sync();}
+ else if(t.dataset.oth)oth[t.dataset.oth]=t.value;});
+sync();
+document.getElementById("agent").addEventListener("input",e=>{e.target.value=e.target.value.replace(/\D/g,"").slice(0,3);});
+
+function build(){
+ const r={survey:"Uttar Pradesh Survey - Raniganj AC",timestamp:new Date().toISOString()};
+ QS.forEach(q=>{let v=ans[q.id]||"";if(q.other&&v==="Other"&&oth[q.id])v="Other: "+oth[q.id];
+  if(q.id=="Q8"){const m=v.match(/\((\d)\)/);r.Q8_rating=m?m[1]:"";}r[q.id]=v;});
+ r.Q15_AgentID=document.getElementById("agent").value.trim();r.Q16_Remarks=document.getElementById("remarks").value.trim();
+ r.SurveyStatus=pdIdx()>=0?PD:(ans.Q1==="No"&&!auto.Q1)?"Screened Out":(QS.every(q=>ans[q.id])?"Completed":"Partially Completed");return r;}
+document.getElementById("sub").onclick=()=>{
+ document.querySelectorAll(".err").forEach(x=>x.classList.remove("err"));
+ const bad=[];
+ if(ans.Q0&&ans.Q0!==PD&&!/^[6-9]\d{9}$/.test(ans.Q0)){bad.push("Q0 (गलत नंबर / invalid phone)");document.getElementById("cQ0").classList.add("err");}
+ if(!/^\d{3}$/.test(document.getElementById("agent").value)){bad.push("Q15 (3 अंकों की आईडी / 3-digit Agent ID)");document.getElementById("cQ15").classList.add("err");}
+ if(bad.length){showPage(pages.findIndex(x=>x.querySelector(".err")));alert("कृपया पूरा करें / Please complete: "+bad.join(", "));document.querySelector(".err").scrollIntoView({behavior:"smooth",block:"center"});return;}
+ const r=build();r._id=crypto.randomUUID();window._r=r;
+ document.getElementById("done").style.display="block";document.getElementById("sub").style.display="none";f.style.display="none";document.getElementById("nav").style.display="none";document.getElementById("top").style.display="none";document.getElementById("banner").style.display="none";
+ document.getElementById("done").scrollIntoView({behavior:"smooth"});saveNow();};
+async function saveNow(){
+ const r=window._r,m=document.getElementById("saveMsg"),rb=document.getElementById("retry");rb.style.display="none";document.getElementById("fb").style.display="none";
+ const c=window.APP_CONFIG||{};
+ if(!c.SUPABASE_URL||c.SUPABASE_URL.includes("YOUR-")){m.textContent="⚠️ Supabase not configured (edit config.js). Download the response below. / Supabase सेट नहीं है।";document.getElementById("fb").style.display="block";return;}
+ const now=new Date();const row={id:r._id,started_at:startedAt.toISOString(),submitted_at:now.toISOString(),duration_seconds:Math.round((now-startedAt)/1000),agent_id:r.Q15_AgentID,remarks:r.Q16_Remarks,survey_status:r.SurveyStatus,q8_rating:r.Q8_rating?+r.Q8_rating:null,raw:r};
+ for(let i=1;i<=14;i++)row["q"+i]=r["Q"+i]||null;row.phone=r.Q0||null;
+ try{
+  const res=await fetch(c.SUPABASE_URL+"/rest/v1/survey_responses",{method:"POST",headers:{"Content-Type":"application/json",apikey:c.SUPABASE_ANON_KEY,Authorization:"Bearer "+c.SUPABASE_ANON_KEY,Prefer:"return=minimal"},body:JSON.stringify(row)});
+  if(res.ok||res.status==409){m.textContent="✅ Response saved / उत्तर सहेज लिया गया।";}
+  else throw new Error(res.status+" "+await res.text());
+ }catch(e){m.textContent="❌ Could not save: "+e.message+" — retry or download the response. / सहेजा नहीं जा सका।";rb.style.display="inline-block";document.getElementById("fb").style.display="block";}
+}
+function dl(t){const r=window._r;let d,m;
+ if(t=="json"){d=JSON.stringify(r,null,2);m="application/json";}
+ else{const k=Object.keys(r);d=k.join(",")+"\n"+k.map(x=>'"'+String(r[x]).replace(/"/g,'""')+'"').join(",");m="text/csv";}
+ const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+d],{type:m+";charset=utf-8"}));
+ a.download="survey_"+(r.Q15_AgentID||"response")+"_"+Date.now()+"."+t;a.click();}
+</script>
+</body>
+</html>
