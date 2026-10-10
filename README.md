@@ -6,11 +6,8 @@ Static bilingual survey form → saves to Supabase → hosted on Vercel. No buil
 - `config.js` – Supabase URL + anon key
 - `supabase/schema.sql` – table + Row Level Security
 
-## How the table gets created
-The table is defined in `supabase/schema.sql`. On every Vercel deploy, `npm run build` runs `scripts/setup-db.js`, which creates the `survey_responses` table (and adds any new columns) in your Supabase database. A browser app cannot create tables itself, so this runs on the server at deploy time.
-Each record stores timestamps: `created_at` (saved time, set by the database), `started_at`, `submitted_at` and `duration_seconds`.
-
-Needs one Vercel environment variable: `DATABASE_URL` = Supabase → Project Settings → Database → Connection string (URI). Keep it only in Vercel, never in the repo. Without it the build skips DB setup, and you can paste `schema.sql` in the Supabase SQL Editor instead.
+## Database
+The table is created from `supabase/schema.sql` (already applied to the project). There is no build step; Vercel just serves the files.
 
 ## 1. Supabase
 1. Create a project at supabase.com (pick a region close to India, e.g. Mumbai).
