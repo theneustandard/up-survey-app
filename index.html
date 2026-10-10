@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="color-scheme" content="light only">
+<meta name="theme-color" content="#315cff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Uttar Pradesh Survey Questionnaire / उत्तर प्रदेश सर्वेक्षण प्रश्नावली</title>
 <style>
@@ -46,6 +50,103 @@ select:focus,input:focus,textarea:focus{outline:2px solid var(--ac);outline-offs
 .script p{margin:6px 0}.script .otag{background:var(--obd)}
 .idt{color:var(--mu);font-weight:400;font-size:.7rem;border:1px solid var(--bd);border-radius:6px;padding:0 5px;margin-left:4px}
 
+
+/* ===== PREMIUM THEME ===== */
+:root{--bg:#f2f7f4;--card:#fff;--tx:#14213d;--mu:#6b7385;--bd:#dbe7df;--ac:#1b8a53;--acl:#e8f6ee;--navy:#14213d;--navy2:#24376b;--gold:#3fc07e;--wr:#b42318;--wrl:#fdecea}
+body{font-family:"Plus Jakarta Sans","Noto Sans Devanagari",system-ui,sans-serif;-webkit-font-smoothing:antialiased;background:radial-gradient(1100px 420px at 50% -140px,#d3eadc,transparent),var(--bg);background-attachment:fixed}
+h1,h2,.pg>h2{font-family:"DM Serif Display","Noto Serif Devanagari",Georgia,serif;font-weight:400;color:var(--navy)}
+#top{background:rgba(242,247,244,.88);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd);padding:14px 0 10px}
+#top h1{font-size:clamp(1.1rem,2.4vw,1.6rem);letter-spacing:.01em}
+#top .sub{color:var(--ac);font-weight:600;letter-spacing:.04em;font-size:.8rem;text-transform:uppercase}
+#track{height:6px;background:#d9eadf}#fill{background:linear-gradient(90deg,var(--gold),var(--ac));border-radius:6px}
+#stepl{text-transform:uppercase;letter-spacing:.08em;font-size:.72rem;font-weight:600;color:var(--mu)}
+.pg.on{animation:fi .35s ease}@keyframes fi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.pg>h2{font-size:clamp(1.25rem,2.4vw,1.6rem);margin:18px 0 0;line-height:1.25}
+.pg>h2::after{content:"";display:block;width:46px;height:3px;border-radius:3px;background:var(--gold);margin-top:10px}
+.q{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:24px;box-shadow:0 1px 2px rgba(20,33,61,.05),0 14px 30px -18px rgba(20,33,61,.22);transition:box-shadow .2s,border-color .2s}
+.q:hover{box-shadow:0 1px 2px rgba(20,33,61,.06),0 18px 36px -16px rgba(20,33,61,.28)}
+.q.err{border-color:var(--wr);box-shadow:0 0 0 4px rgba(180,35,24,.12)}.q.locked{opacity:.55;filter:grayscale(.6)}
+.qt{display:flex;align-items:flex-start;gap:12px;font-size:1.08rem;font-weight:600;color:var(--navy);line-height:1.4}
+.qn{flex:none;min-width:30px;height:30px;padding:0 10px;border-radius:15px;background:var(--navy);color:#fff;font-size:.82rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-top:-1px}
+.qh{margin:6px 0 14px 42px;color:var(--mu);font-size:.97rem}.note{margin-left:42px}
+.q .chips,.q select,.q input[type=text],.q input[type=number],.q input[type=tel],.q textarea{margin-left:0}
+.chips{gap:10px}.chip{position:relative;background:#fff;border:1.5px solid var(--bd);border-radius:12px;padding:11px 18px;font-size:.98rem;transition:all .15s}
+.chip:hover{border-color:var(--navy2);transform:translateY(-1px)}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip:has(input:checked){background:var(--navy);border-color:var(--navy);color:#fff;font-weight:600;box-shadow:0 6px 14px -6px rgba(20,33,61,.5)}
+.chip:has(input:checked)::before{content:"✓ "}
+.chip.pd:has(input:checked){background:var(--wr);border-color:var(--wr);color:#fff}
+select,input[type=text],input[type=number],input[type=tel],textarea{background:#fff;border:1.5px solid var(--bd);border-radius:12px;padding:14px;font-family:inherit;color:var(--navy);transition:border-color .15s,box-shadow .15s}
+select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%2314213d' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:42px}
+select:focus,input:focus,textarea:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 4px rgba(27,138,83,.22)}
+::placeholder{color:#a3a9b8}
+button{font-family:inherit;border-radius:12px;background:linear-gradient(135deg,var(--navy),var(--navy2));box-shadow:0 8px 18px -8px rgba(20,33,61,.55);transition:transform .15s,box-shadow .15s;letter-spacing:.01em}
+button:hover{transform:translateY(-1px)}button.s{background:#fff;color:var(--navy);border:1.5px solid var(--bd);box-shadow:none}
+#sub,#done div>button:not(.s){background:linear-gradient(135deg,#2fb774,#1b8a53);color:#fff}
+#nav{background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--bd);box-shadow:0 -10px 30px -18px rgba(20,33,61,.3)}
+#nav button.s{box-shadow:none}
+.open{background:linear-gradient(135deg,#14213d,#24376b);color:#eaf6ef;border:none;border-radius:20px;padding:24px 28px;box-shadow:0 18px 36px -20px rgba(20,33,61,.7)}
+.open p{line-height:1.7}.open .otag{background:var(--gold);color:var(--navy)}
+.ins{background:#fff;border:1px solid var(--bd);border-left:5px solid var(--gold);border-radius:14px;padding:16px 20px;line-height:1.7}
+.script{background:var(--acl);border:1px solid #bde2cc;border-left:5px solid var(--gold);border-radius:14px;padding:14px 20px;color:#0d3a24}
+.script .otag{background:var(--ac);color:#fff}.script p{line-height:1.7}
+.otag{border-radius:20px;letter-spacing:.03em;font-size:.78rem}
+.banner{border-radius:14px;box-shadow:0 8px 20px -12px rgba(180,35,24,.5)}
+.idt{background:#eaf3ee;border:none;color:var(--mu);border-radius:6px}
+
+/* ===== NEU THEME (#315cff) ===== */
+:root{--bg:#f5f7fc;--bd:#e1e6f2;--ac:#315cff;--acl:#eef2ff;--gold:#6f8fff;--navy:#0f1a3d;--navy2:#315cff}
+body{background:radial-gradient(1100px 420px at 50% -140px,#dfe6ff,transparent),var(--bg);background-attachment:fixed}
+#top{background:rgba(245,247,252,.88)}#track{background:#dfe6fa}#fill{background:linear-gradient(90deg,#6f8fff,#315cff)}
+.qn{background:#315cff}
+.chip:has(input:checked){background:#315cff;border-color:#315cff;box-shadow:0 8px 16px -8px rgba(49,92,255,.6)}
+button{background:linear-gradient(135deg,#4a72ff,#315cff);box-shadow:0 10px 20px -10px rgba(49,92,255,.7)}
+button.s{background:#fff;color:#0f1a3d;box-shadow:none}
+#sub,#done div>button:not(.s){background:linear-gradient(135deg,#4a72ff,#315cff)}
+.open{background:linear-gradient(135deg,#1f3fd1,#315cff);color:#fff}.open .otag{background:#fff;color:#315cff}
+.script{background:#eef2ff;border:1px solid #cdd8ff;border-left:5px solid #315cff;color:#14224f}.script .otag{background:#315cff;color:#fff}
+.ins{border-left-color:#315cff}
+select:focus,input:focus,textarea:focus{border-color:#315cff;box-shadow:0 0 0 4px rgba(49,92,255,.18)}
+.idt{background:#eef1fb}
+
+/* ===== NEU MATCH (Inter, lavender bg, blue-top cards, teal hero, mint selected) ===== */
+:root{--bg:#f4f5fb;--tx:#1f2d3d;--mu:#667085;--bd:#e1e5f2;--ac:#315cff;--acl:#eef0fd;--mint:#e8f5ef;--mintbd:#b9dcc9;--green:#2f7d5b}
+body{font-family:Inter,"Noto Sans Devanagari",system-ui,sans-serif;background:var(--bg);color:var(--tx)}
+h1,h2,.pg>h2{font-family:Inter,"Noto Sans Devanagari",sans-serif;font-weight:700;letter-spacing:-.02em;color:#1b2a41}
+.pg>h2::after{content:none}.pg>h2{font-size:clamp(1.3rem,2.6vw,1.75rem);margin:22px 0 2px}
+main{max-width:1180px}
+#top{top:0;background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none;border:1px solid var(--bd);border-top:none;border-radius:0 0 22px 22px;padding:14px 22px 0;overflow:hidden}
+#top h1{font-size:clamp(1.05rem,2.2vw,1.4rem);color:#315cff;letter-spacing:-.02em}
+#top .sub{font-size:.7rem;letter-spacing:.16em;color:var(--mu);font-weight:500}
+#track{margin-top:6px;margin-bottom:0}#fill{background:linear-gradient(90deg,#315cff,#4a9a8a)}
+#stepl{background:var(--acl);color:#315cff;text-align:center;padding:8px 10px;margin:8px -22px 0;letter-spacing:.06em;font-size:.72rem}
+.banner{top:104px}
+.q{background:#fff;border:1px solid var(--bd);border-top:3px solid #315cff;border-radius:24px;padding:26px 28px;box-shadow:0 1px 2px rgba(20,33,61,.04)}
+.q:nth-child(even){border-top-color:#4a9a8a}.q:hover{box-shadow:0 10px 26px -16px rgba(49,92,255,.4)}
+.qt{display:block;font-size:1.12rem;font-weight:700;color:#1b2a41;letter-spacing:-.01em;line-height:1.45}
+.qn{display:inline;background:none;color:#315cff;min-width:0;height:auto;padding:0;font-size:inherit;margin:0 4px 0 0}
+.qh{margin:4px 0 14px;color:var(--mu)}.note{margin-left:0}
+.chip{border-radius:14px;border:1.5px solid #dfe4f1;background:#fafbff;padding:12px 18px;font-weight:500}
+.chip:hover{border-color:#315cff;background:#fff;transform:none}
+.chip:has(input:checked){background:var(--mint);border-color:#7fc2a1;color:var(--green);font-weight:700;box-shadow:none}
+.chip.pd:has(input:checked){background:#fdecea;border-color:#b42318;color:#b42318}
+select,input[type=text],input[type=number],input[type=tel],textarea{background:#fafbff;border:1.5px solid #dfe4f1;border-radius:16px;padding:15px 16px;color:#1f2d3d}
+select:focus,input:focus,textarea:focus{border-color:#315cff;box-shadow:0 0 0 4px rgba(49,92,255,.14);background:#fff}
+button{background:#315cff;border-radius:14px;box-shadow:none;font-weight:600}button:hover{background:#2748d9;transform:none}
+button.s{background:#fff;color:#1b2a41;border:1.5px solid var(--bd)}button.s:hover{background:#f7f8fe}
+#sub,#done div>button:not(.s){background:#315cff}
+#nav{background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none}
+.open{position:relative;overflow:hidden;background:#2f6b68;color:#fff;border:none;border-radius:24px;padding:28px 32px;box-shadow:none}
+.open::before{content:"";position:absolute;right:-60px;top:-80px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.07)}
+.open::after{content:"";position:absolute;right:90px;top:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.06)}
+.open>*{position:relative;z-index:1}.open p{color:#e9f4f1;line-height:1.75}
+.open .otag,.script .otag{border-radius:8px;letter-spacing:.12em;text-transform:uppercase;font-size:.7rem;padding:5px 12px;font-weight:600}
+.open .otag{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);color:#fff}
+.script{background:var(--mint);border:1px solid var(--mintbd);border-radius:20px;padding:16px 22px;color:#1d5a40}
+.script .otag{background:#fff;color:var(--green);border:1px solid var(--mintbd)}
+.ins{background:#fff;border:1px solid var(--bd);border-radius:20px}
+.idt{background:#eef0fa;color:#667085;border-radius:8px}
+.open p:last-of-type,.script p:last-of-type{font-weight:700}
 </style>
 </head>
 <body>
@@ -121,7 +222,7 @@ if(q.k=="sel"){c=`<select data-q="${q.id}"><option value="">— Select / चु�
  if(q.other)c+=`<input type="text" data-oth="${q.id}" placeholder="Please specify / कृपया बताएं" style="display:none">`;}
 else{ if(q.k=="in")c+=`<input type="${q.inp}" ${q.inp=="number"?'min="1" max="99"':""} data-in="${q.id}" placeholder="${q.ph}">`;
  c+=`<div class="chips">${opts.map(o=>`<label class="chip ${o[0]==PD?"pd":""}"><input type="radio" name="${q.id}" value="${esc(o[0])}">${lab(o)}</label>`).join("")}</div>`;}
-h+=`<div class="q" id="c${q.id}"><div class="qt">${q.agent?"👤 Agent entry:":(++dn)+"."} ${q.en} <small class="idt">${q.id}</small></div><div class="qh">${q.hi}</div>${q.note?`<div class="note">${q.note}</div>`:""}${c}</div>`;});});
+h+=`<div class="q" id="c${q.id}"><div class="qt"><span class="qn">${q.agent?"👤 Agent":(++dn)+"."}</span> ${q.en} <small class="idt">${q.id}</small></div><div class="qh">${q.hi}</div>${q.note?`<div class="note">${q.note}</div>`:""}${c}</div>`;});});
 h+=`<div class="q" id="cQ15"><div class="qt">Q15. Enter your Agent ID.</div><div class="qh">प्रश्न 15. अपनी एजेंट आईडी दर्ज करें।</div><input type="tel" id="agent" inputmode="numeric" maxlength="3" pattern="[0-9]{3}" placeholder="3-digit Agent ID / 3 अंकों की एजेंट आईडी"></div>
 <div class="q"><div class="qt">Q16. Agent Remarks.</div><div class="qh">एजेंट की टिप्पणी।</div><textarea id="remarks" rows="3" placeholder="Remarks / टिप्पणी"></textarea></div>
 <button id="sub">Submit / जमा करें</button>`;
