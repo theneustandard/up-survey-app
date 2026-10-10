@@ -109,17 +109,15 @@ else{ if(q.k=="in")c+=`<input type="${q.inp}" ${q.inp=="number"?'min="1" max="99
  c+=`<div class="chips">${opts.map(o=>`<label class="chip ${o[0]==PD?"pd":""}"><input type="radio" name="${q.id}" value="${esc(o[0])}">${lab(o)}</label>`).join("")}</div>`;}
 h+=`<div class="q" id="c${q.id}"><div class="qt">${q.id}. ${q.en}</div><div class="qh">${q.hi}</div>${q.note?`<div class="note">${q.note}</div>`:""}${c}</div>`;});});
 h+=`<h2>SECTION 4: SURVEY AGENT DETAILS<br>खंड 4: सर्वेक्षण एजेंट का विवरण</h2>
-<div class="q" id="cQ15"><div class="qt">Q15. Enter your Agent ID.</div><div class="qh">प्रश्न 15. अपनी एजेंट आईडी दर्ज करें।</div><input type="text" id="agent" placeholder="Agent ID / एजेंट आईडी"></div>
+<div class="q" id="cQ15"><div class="qt">Q15. Enter your Agent ID.</div><div class="qh">प्रश्न 15. अपनी एजेंट आईडी दर्ज करें।</div><input type="tel" id="agent" inputmode="numeric" maxlength="3" pattern="[0-9]{3}" placeholder="3-digit Agent ID / 3 अंकों की एजेंट आईडी"></div>
 <div class="q"><div class="qt">Q16. Agent Remarks.</div><div class="qh">एजेंट की टिप्पणी।</div><textarea id="remarks" rows="3" placeholder="Remarks / टिप्पणी"></textarea></div>
-<h2>SURVEY STATUS / सर्वेक्षण स्थिति</h2>
-<div class="q" id="cSt"><select id="status"><option value="">— Select applicable status / लागू स्थिति चुनें —</option>${STAT.map(O).map(o=>`<option value="${o[0]}">${lab(o)}</option>`).join("")}</select></div>
 <button id="sub">Submit / जमा करें</button>`;
 f.innerHTML=h;
 let pages=[],cp=0,lastP=-1;
 (function(){let cur=null;[...f.children].forEach(n=>{if(n.tagName=="H2"&&!/SURVEY STATUS/.test(n.textContent)){cur=document.createElement("section");cur.className="pg";f.appendChild(cur);pages.push(cur);}cur.appendChild(n);});
  const intro=document.createElement("section");intro.className="pg";intro.appendChild(document.querySelector(".open"));intro.appendChild(document.querySelector(".main>.ins")||document.querySelector("main>.ins"));
  f.insertBefore(intro,f.firstChild);pages.unshift(intro);})();
-const TITLES=["Introduction / परिचय","Section 1 / खंड 1","Section 2 / खंड 2","Section 3 / खंड 3","Section 4 & Status / खंड 4 एवं स्थिति"];
+const TITLES=["Introduction / परिचय","Section 1 / खंड 1","Section 2 / खंड 2","Section 3 / खंड 3","Section 4 / खंड 4"];
 function showPage(i){cp=Math.max(0,Math.min(pages.length-1,i));pages.forEach((x,k)=>x.classList.toggle("on",k==cp));
  document.getElementById("fill").style.width=((cp+1)/pages.length*100)+"%";
  document.getElementById("stepl").textContent="Step "+(cp+1)+" of "+pages.length+" — "+TITLES[cp];
@@ -161,9 +159,7 @@ function sync(){
   const ot=card.querySelector("[data-oth]");if(ot){ot.style.display=v==="Other"?"block":"none";ot.disabled=lock;if(lock)ot.value="";}
  });
  if(p>=0&&lastP<0)showPage(pages.length-1);lastP=p;
- const st=document.getElementById("status"),b=document.getElementById("banner");
- if(p>=0){if(!statusAuto){statusPrev=st.value;statusAuto=true;}st.value=PD;st.disabled=true;b.style.display="block";}
- else if(statusAuto){st.value=statusPrev==PD?"":statusPrev;st.disabled=false;statusAuto=false;b.style.display="none";}
+ document.getElementById("banner").style.display=p>=0?"block":"none";
 }
 f.addEventListener("change",e=>{const t=e.target;
  if(t.type=="radio"){ans[t.name]=t.value;sync();}
@@ -175,20 +171,19 @@ f.addEventListener("input",e=>{const t=e.target;
   const pd=pdIdx();if(pd>=0||Object.values(auto).some(x=>x))sync();}
  else if(t.dataset.oth)oth[t.dataset.oth]=t.value;});
 sync();
+document.getElementById("agent").addEventListener("input",e=>{e.target.value=e.target.value.replace(/\D/g,"").slice(0,3);});
 
 function build(){
  const r={survey:"Uttar Pradesh Survey - Raniganj AC",timestamp:new Date().toISOString()};
  QS.forEach(q=>{let v=ans[q.id]||"";if(q.other&&v==="Other"&&oth[q.id])v="Other: "+oth[q.id];
   if(q.id=="Q8"){const m=v.match(/\((\d)\)/);r.Q8_rating=m?m[1]:"";}r[q.id]=v;});
  r.Q15_AgentID=document.getElementById("agent").value.trim();r.Q16_Remarks=document.getElementById("remarks").value.trim();
- r.SurveyStatus=document.getElementById("status").value;return r;}
+ r.SurveyStatus=pdIdx()>=0?PD:(QS.every(q=>ans[q.id])?"Completed":"Partially Completed");return r;}
 document.getElementById("sub").onclick=()=>{
  document.querySelectorAll(".err").forEach(x=>x.classList.remove("err"));
- const bad=[];const dis=pdIdx()>=0;
- if(!dis&&document.getElementById("status").value=="Completed")QS.forEach(q=>{if(!ans[q.id]){bad.push(q.id);document.getElementById("c"+q.id).classList.add("err");}});
+ const bad=[];
  if(ans.Q0&&ans.Q0!==PD&&!/^[6-9]\d{9}$/.test(ans.Q0)){bad.push("Q0 (invalid phone / गलत नंबर)");document.getElementById("cQ0").classList.add("err");}
- if(!document.getElementById("agent").value.trim()){bad.push("Q15");document.getElementById("cQ15").classList.add("err");}
- if(!document.getElementById("status").value){bad.push("Status");document.getElementById("cSt").classList.add("err");}
+ if(!/^\d{3}$/.test(document.getElementById("agent").value)){bad.push("Q15 (3-digit Agent ID / 3 अंकों की आईडी)");document.getElementById("cQ15").classList.add("err");}
  if(bad.length){showPage(pages.findIndex(x=>x.querySelector(".err")));alert("Please complete / कृपया पूरा करें: "+bad.join(", "));document.querySelector(".err").scrollIntoView({behavior:"smooth",block:"center"});return;}
  const r=build();r._id=crypto.randomUUID();window._r=r;
  document.getElementById("done").style.display="block";document.getElementById("sub").style.display="none";f.style.display="none";document.getElementById("nav").style.display="none";document.getElementById("top").style.display="none";document.getElementById("banner").style.display="none";
