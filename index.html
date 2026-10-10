@@ -75,6 +75,7 @@ const dk=["Did not vote|वोट नहीं दिया","Don't Remember|य
 // kind: rad (chips) | sel (dropdown) | in (typed input + chips)
 const S=[
 {t:"SECTION 1: SCREENER AND BASIC PROFILE|खंड 1: प्रारंभिक जानकारी एवं सामान्य परिचय",q:[
+{id:"Q0",en:"Phone Number",hi:"फ़ोन नंबर",note:"Enter the 10-digit mobile number that was dialled. / जिस 10 अंकों के मोबाइल नंबर पर कॉल की गई है, वह दर्ज करें।",k:"in",inp:"tel",ph:"10-digit mobile number / 10 अंकों का मोबाइल नंबर",o:[]},
 {id:"Q1",en:"Are you from the Raniganj Assembly Constituency?",hi:"क्या आप रानीगंज विधानसभा क्षेत्र के निवासी हैं?",k:"rad",o:["Yes|हाँ","No|नहीं"]},
 {id:"Q2",en:"Gender",hi:"लिंग",note:"To be filled in by the survey agent based on the respondent's voice. / उत्तरदाता की आवाज़ के आधार पर सर्वेक्षण एजेंट द्वारा भरा जाए।",k:"rad",o:["Male|पुरुष","Female|महिला","Other|अन्य"]},
 {id:"Q3",en:"Could you please tell me your age?",hi:"क्या आप अपनी आयु बता सकते हैं?",note:"If the respondent does not answer, enter 99. / उत्तर न देने पर 99 दर्ज करें।",k:"in",inp:"number",ph:"Age / आयु (Years / वर्ष)",o:["99|उत्तर नहीं दिया"]}]},
@@ -168,7 +169,7 @@ f.addEventListener("change",e=>{const t=e.target;
  if(t.type=="radio"){ans[t.name]=t.value;sync();}
  else if(t.matches("select[data-q]")){ans[t.dataset.q]=t.value;sync();}});
 f.addEventListener("input",e=>{const t=e.target;
- if(t.dataset.in){ans[t.dataset.in]=t.value.trim();
+ if(t.dataset.in){if(t.dataset.in=="Q0")t.value=t.value.replace(/\D/g,"").slice(0,10);ans[t.dataset.in]=t.value.trim();
   const card=document.getElementById("c"+t.dataset.in);card.querySelectorAll("input[type=radio]").forEach(r=>r.checked=r.value===ans[t.dataset.in]);
   if(ans[t.dataset.in]===""){}
   const pd=pdIdx();if(pd>=0||Object.values(auto).some(x=>x))sync();}
@@ -185,6 +186,7 @@ document.getElementById("sub").onclick=()=>{
  document.querySelectorAll(".err").forEach(x=>x.classList.remove("err"));
  const bad=[];const dis=pdIdx()>=0;
  if(!dis&&document.getElementById("status").value=="Completed")QS.forEach(q=>{if(!ans[q.id]){bad.push(q.id);document.getElementById("c"+q.id).classList.add("err");}});
+ if(ans.Q0&&ans.Q0!==PD&&!/^[6-9]\d{9}$/.test(ans.Q0)){bad.push("Q0 (invalid phone / गलत नंबर)");document.getElementById("cQ0").classList.add("err");}
  if(!document.getElementById("agent").value.trim()){bad.push("Q15");document.getElementById("cQ15").classList.add("err");}
  if(!document.getElementById("status").value){bad.push("Status");document.getElementById("cSt").classList.add("err");}
  if(bad.length){showPage(pages.findIndex(x=>x.querySelector(".err")));alert("Please complete / कृपया पूरा करें: "+bad.join(", "));document.querySelector(".err").scrollIntoView({behavior:"smooth",block:"center"});return;}
@@ -196,7 +198,7 @@ async function saveNow(){
  const c=window.APP_CONFIG||{};
  if(!c.SUPABASE_URL||c.SUPABASE_URL.includes("YOUR-")){m.textContent="⚠️ Supabase not configured (edit config.js). Download the response below. / Supabase सेट नहीं है।";return;}
  const now=new Date();const row={id:r._id,started_at:startedAt.toISOString(),submitted_at:now.toISOString(),duration_seconds:Math.round((now-startedAt)/1000),agent_id:r.Q15_AgentID,remarks:r.Q16_Remarks,survey_status:r.SurveyStatus,q8_rating:r.Q8_rating?+r.Q8_rating:null,raw:r};
- for(let i=1;i<=14;i++)row["q"+i]=r["Q"+i]||null;
+ for(let i=1;i<=14;i++)row["q"+i]=r["Q"+i]||null;row.phone=r.Q0||null;
  try{
   const res=await fetch(c.SUPABASE_URL+"/rest/v1/survey_responses",{method:"POST",headers:{"Content-Type":"application/json",apikey:c.SUPABASE_ANON_KEY,Authorization:"Bearer "+c.SUPABASE_ANON_KEY,Prefer:"return=minimal"},body:JSON.stringify(row)});
   if(res.ok||res.status==409){m.textContent="✅ Response saved / उत्तर सहेज लिया गया।";}
