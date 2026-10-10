@@ -7,8 +7,8 @@
 <style>
 :root{--bg:#f4f5f7;--card:#fff;--tx:#1d2330;--mu:#667085;--bd:#d6dae1;--ac:#e8590c;--acl:#fff0e6;--wr:#b42318;--wrl:#fdecea}
 @media(prefers-color-scheme:dark){:root{--bg:#14161b;--card:#1e2128;--tx:#eceef2;--mu:#9aa3b2;--bd:#363b46;--ac:#ff8a4c;--acl:#33241a;--wr:#ff8a80;--wrl:#3a1d1b}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,"Noto Sans Devanagari",sans-serif;padding:16px}
-main{max-width:760px;margin:0 auto}h1{font-size:1.4rem;margin:8px 0 4px}.sub{color:var(--mu);margin:0 0 12px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,"Noto Sans Devanagari",sans-serif}
+main{width:100%;max-width:1280px;margin:0 auto;padding:0 clamp(12px,3vw,40px) 110px}h1{font-size:1.4rem;margin:8px 0 4px}.sub{color:var(--mu);margin:0 0 12px}
 .ins{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--ac);padding:10px 14px;border-radius:8px;font-size:.9rem}
 .open{--ob:#e6f2ff;--obd:#1c6fd1;--ot:#0b3a73;background:var(--ob);border:2px solid var(--obd);border-radius:10px;padding:12px 16px;margin-bottom:14px;color:var(--ot)}
 .open p{margin:6px 0}.otag{display:inline-block;background:var(--obd);color:#fff;font-weight:700;font-size:.85rem;padding:3px 10px;border-radius:14px;margin-bottom:4px}
@@ -27,12 +27,25 @@ button.s{background:var(--card);color:var(--tx);border:1px solid var(--bd)}
 .banner{display:none;position:sticky;top:8px;z-index:5;background:var(--wrl);color:var(--wr);border:1px solid var(--wr);border-radius:8px;padding:8px 12px;margin:10px 0;font-weight:600}
 pre{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:12px;overflow-x:auto;font-size:.8rem}
 #done{display:none}
+
+#top{position:sticky;top:0;z-index:10;background:var(--bg);padding:10px 0 6px;border-bottom:1px solid var(--bd)}
+#top h1{font-size:clamp(1rem,2.2vw,1.35rem);margin:0}#top .sub{margin:0 0 6px;font-size:.85rem}
+#track{height:8px;background:var(--bd);border-radius:6px;overflow:hidden}#fill{height:100%;width:0;background:var(--ac);transition:width .3s}
+#stepl{font-size:.82rem;color:var(--mu);margin-top:4px}
+.banner{top:92px}
+.pg{display:none;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,500px),1fr));align-items:start;padding-top:6px}
+.pg.on{display:grid}.pg>h2,.pg>.open,.pg>.ins,.pg>button{grid-column:1/-1}.pg>h2{margin:14px 0 0}
+.q{margin:0;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.06)}.qt{font-size:1.05rem}
+.chip{padding:10px 16px;font-size:1rem}select,input[type=text],input[type=number],textarea{padding:12px;font-size:1rem}
+select:focus,input:focus,textarea:focus{outline:2px solid var(--ac);outline-offset:1px}
+#nav{position:fixed;left:0;right:0;bottom:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card);border-top:1px solid var(--bd);padding:10px clamp(12px,3vw,40px) calc(10px + env(safe-area-inset-bottom,0px))}
+#nav button{margin:0;min-width:130px;padding:12px 20px}#nav button:disabled{opacity:.4}#stp{color:var(--mu);font-size:.9rem;text-align:center}
+#sub{padding:14px 28px;font-size:1.05rem}
 </style>
 </head>
 <body>
 <main>
-<h1>Uttar Pradesh Survey Questionnaire<br>उत्तर प्रदेश सर्वेक्षण प्रश्नावली</h1>
-<p class="sub">Raniganj Assembly Constituency / रानीगंज विधानसभा क्षेत्र</p>
+<div id="top"><h1>Uttar Pradesh Survey Questionnaire / उत्तर प्रदेश सर्वेक्षण प्रश्नावली</h1><p class="sub">Raniganj Assembly Constituency / रानीगंज विधानसभा क्षेत्र</p><div id="track"><div id="fill"></div></div><div id="stepl"></div></div>
 <div class="open"><div class="otag">📣 Opening Script / प्रारंभिक स्क्रिप्ट</div>
 <p style="margin:8px 0 4px"><b>English Opening Script</b></p>
 <p style="margin:0 0 10px">Hello, Namaste! I’m ________, a student of the Political Science Department at the University of Lucknow. As part of my college assignment, I’m conducting a short survey to understand the current political scenario in Uttar Pradesh and people’s opinions on political and local issues. It will take just 2 minutes, and your personal information will not be stored. Could I speak with you for two minutes and ask you a few questions?</p>
@@ -49,6 +62,7 @@ pre{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:
 <button onclick="dl('json')">Download JSON</button><button class="s" onclick="dl('csv')">Download CSV</button><button class="s" onclick="location.reload()">New Survey / नया सर्वेक्षण</button>
 </div>
 </main>
+<nav id="nav"><button class="s" id="bk">← Back / पीछे</button><span id="stp"></span><button id="nx">Next / आगे →</button></nav>
 <script src="config.js"></script>
 <script>
 const PD="Phone Disconnected",PDH="फ़ोन डिस्कनेक्ट है",PNA="Prefer Not to Answer|उत्तर नहीं देना चाहते";
@@ -76,7 +90,7 @@ const S=[
 {id:"Q11",en:"Could you please tell me your caste?",hi:"क्या आप अपनी जाति बता सकते हैं?",k:"sel",other:1,o:[]},
 {id:"Q12",en:"What is the most important issue you face in your Assembly Constituency?",hi:"आपके विधानसभा क्षेत्र की सबसे बड़ी समस्या क्या है?",k:"sel",other:1,o:["Unemployment|बेरोज़गारी","Inflation|महँगाई","Roads and Infrastructure|सड़कें एवं बुनियादी ढाँचा","Electricity Supply|बिजली की आपूर्ति","Water Supply|पानी की आपूर्ति","Healthcare|स्वास्थ्य सेवाएँ","Education|शिक्षा","Law and Order|कानून-व्यवस्था","Agriculture and Farmers' Issues|कृषि एवं किसानों की समस्याएँ","Corruption|भ्रष्टाचार","Other|अन्य"]},
 {id:"Q13",en:"In your opinion, who is the most prominent leader in the BJP?",hi:"आपकी राय में भाजपा का सबसे प्रमुख नेता कौन है?",k:"in",inp:"text",ph:"Leader's Name / नेता का नाम",o:[]},
-{id:"Q14",en:"In your opinion, who is the most prominent leader in the BJP?",hi:"आपकी राय में भाजपा का सबसे प्रमुख नेता कौन है?",note:"Administrator's Note: Q14 duplicates Q13 in the original questionnaire. Confirm whether Q14 should be replaced. / प्रशासक टिप्पणी: प्रश्न 14, प्रश्न 13 के समान है; कृपया पुष्टि करें।",k:"in",inp:"text",ph:"Leader's Name / नेता का नाम",o:[]}]}
+{id:"Q14",en:"In your opinion, who is the most prominent leader in the SP?",hi:"आपकी राय में समाजवादी पार्टी (सपा) का सबसे प्रमुख नेता कौन है?",k:"in",inp:"text",ph:"Leader's Name / नेता का नाम",o:[]}]}
 ];
 const STAT=["Completed|पूरा हुआ","Partially Completed|आंशिक रूप से पूरा हुआ","Respondent Refused|उत्तरदाता ने मना किया","No Response|कोई उत्तर नहीं मिला",PDO,"Call Back Required|दोबारा कॉल करना है","Other|अन्य"];
 const startedAt=new Date();const ans={},auto={},oth={};let QS=[],statusAuto=false,statusPrev="";
@@ -100,6 +114,19 @@ h+=`<h2>SECTION 4: SURVEY AGENT DETAILS<br>खंड 4: सर्वेक्ष
 <div class="q" id="cSt"><select id="status"><option value="">— Select applicable status / लागू स्थिति चुनें —</option>${STAT.map(O).map(o=>`<option value="${o[0]}">${lab(o)}</option>`).join("")}</select></div>
 <button id="sub">Submit / जमा करें</button>`;
 f.innerHTML=h;
+let pages=[],cp=0,lastP=-1;
+(function(){let cur=null;[...f.children].forEach(n=>{if(n.tagName=="H2"&&!/SURVEY STATUS/.test(n.textContent)){cur=document.createElement("section");cur.className="pg";f.appendChild(cur);pages.push(cur);}cur.appendChild(n);});
+ const intro=document.createElement("section");intro.className="pg";intro.appendChild(document.querySelector(".open"));intro.appendChild(document.querySelector(".main>.ins")||document.querySelector("main>.ins"));
+ f.insertBefore(intro,f.firstChild);pages.unshift(intro);})();
+const TITLES=["Introduction / परिचय","Section 1 / खंड 1","Section 2 / खंड 2","Section 3 / खंड 3","Section 4 & Status / खंड 4 एवं स्थिति"];
+function showPage(i){cp=Math.max(0,Math.min(pages.length-1,i));pages.forEach((x,k)=>x.classList.toggle("on",k==cp));
+ document.getElementById("fill").style.width=((cp+1)/pages.length*100)+"%";
+ document.getElementById("stepl").textContent="Step "+(cp+1)+" of "+pages.length+" — "+TITLES[cp];
+ document.getElementById("stp").textContent=(cp+1)+" / "+pages.length;
+ document.getElementById("bk").disabled=cp==0;document.getElementById("nx").style.visibility=cp==pages.length-1?"hidden":"visible";
+ window.scrollTo({top:0,behavior:"smooth"});}
+document.getElementById("bk").onclick=()=>showPage(cp-1);document.getElementById("nx").onclick=()=>showPage(cp+1);
+showPage(0);
 
 function pdIdx(){return QS.findIndex(q=>ans[q.id]===PD&&!auto[q.id]);}
 const CASTE={
@@ -132,6 +159,7 @@ function sync(){
   const t=card.querySelector("[data-in]");if(t){t.value=(v===PD||!v||isNaN(v)&&q.inp=="number"||card.querySelector(`input[type=radio][value="${CSS.escape?v:v}"]`)&&q.inp=="text"&&v===PNA.split("|")[0])?"":v;t.disabled=lock;}
   const ot=card.querySelector("[data-oth]");if(ot){ot.style.display=v==="Other"?"block":"none";ot.disabled=lock;if(lock)ot.value="";}
  });
+ if(p>=0&&lastP<0)showPage(pages.length-1);lastP=p;
  const st=document.getElementById("status"),b=document.getElementById("banner");
  if(p>=0){if(!statusAuto){statusPrev=st.value;statusAuto=true;}st.value=PD;st.disabled=true;b.style.display="block";}
  else if(statusAuto){st.value=statusPrev==PD?"":statusPrev;st.disabled=false;statusAuto=false;b.style.display="none";}
@@ -159,9 +187,9 @@ document.getElementById("sub").onclick=()=>{
  if(!dis&&document.getElementById("status").value=="Completed")QS.forEach(q=>{if(!ans[q.id]){bad.push(q.id);document.getElementById("c"+q.id).classList.add("err");}});
  if(!document.getElementById("agent").value.trim()){bad.push("Q15");document.getElementById("cQ15").classList.add("err");}
  if(!document.getElementById("status").value){bad.push("Status");document.getElementById("cSt").classList.add("err");}
- if(bad.length){alert("Please complete / कृपया पूरा करें: "+bad.join(", "));document.querySelector(".err").scrollIntoView({behavior:"smooth",block:"center"});return;}
+ if(bad.length){showPage(pages.findIndex(x=>x.querySelector(".err")));alert("Please complete / कृपया पूरा करें: "+bad.join(", "));document.querySelector(".err").scrollIntoView({behavior:"smooth",block:"center"});return;}
  const r=build();r._id=crypto.randomUUID();window._r=r;document.getElementById("out").textContent=JSON.stringify(r,null,2);
- document.getElementById("done").style.display="block";document.getElementById("sub").style.display="none";
+ document.getElementById("done").style.display="block";document.getElementById("sub").style.display="none";f.style.display="none";document.getElementById("nav").style.display="none";document.getElementById("top").style.display="none";document.getElementById("banner").style.display="none";
  document.getElementById("done").scrollIntoView({behavior:"smooth"});saveNow();};
 async function saveNow(){
  const r=window._r,m=document.getElementById("saveMsg"),rb=document.getElementById("retry");rb.style.display="none";
