@@ -34,13 +34,17 @@ pre{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:
 #stepl{font-size:.82rem;color:var(--mu);margin-top:4px}
 .banner{top:92px}
 .pg{display:none;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,500px),1fr));align-items:start;padding-top:6px}
-.pg.on{display:grid}.pg>h2,.pg>.open,.pg>.ins,.pg>button{grid-column:1/-1}.pg>h2{margin:14px 0 0}
+.pg.on{display:grid}.pg>h2,.pg>.open,.pg>.script,.pg>.ins,.pg>button{grid-column:1/-1}.pg>h2{margin:14px 0 0}
 .q{margin:0;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.06)}.qt{font-size:1.05rem}
 .chip{padding:10px 16px;font-size:1rem}select,input[type=text],input[type=number],input[type=tel],textarea{padding:12px;font-size:1rem}
 select:focus,input:focus,textarea:focus{outline:2px solid var(--ac);outline-offset:1px}
 #nav{position:fixed;left:0;right:0;bottom:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card);border-top:1px solid var(--bd);padding:10px clamp(12px,3vw,40px) calc(10px + env(safe-area-inset-bottom,0px))}
 #nav button{margin:0;min-width:130px;padding:12px 20px}#nav button:disabled{opacity:.4}#stp{color:var(--mu);font-size:.9rem;text-align:center}
 #sub{padding:14px 28px;font-size:1.05rem}
+.script{--ob:#e7f7ed;--obd:#1f8f4e;--ot:#0e3b22;background:var(--ob);border:2px solid var(--obd);border-radius:10px;padding:10px 16px;color:var(--ot)}
+.script p{margin:6px 0}.script .otag{background:var(--obd)}
+.idt{color:var(--mu);font-weight:400;font-size:.7rem;border:1px solid var(--bd);border-radius:6px;padding:0 5px;margin-left:4px}
+@media(prefers-color-scheme:dark){.script{--ob:#10291b;--obd:#4cc486;--ot:#d6f5e4}.script .otag{color:#0a1d12}}
 </style>
 </head>
 <body>
@@ -74,32 +78,41 @@ const O=s=>s.split("|"); // en|hi
 const dk=["Did not vote|वोट नहीं दिया","Don't Remember|याद नहीं",PNA];
 // kind: rad (chips) | sel (dropdown) | in (typed input + chips)
 const S=[
-{t:"SECTION 1: SCREENER AND BASIC PROFILE|खंड 1: प्रारंभिक जानकारी एवं सामान्य परिचय",q:[
-{id:"Q0",en:"Phone Number",hi:"फ़ोन नंबर",note:"Enter the 10-digit mobile number that was dialled. / जिस 10 अंकों के मोबाइल नंबर पर कॉल की गई है, वह दर्ज करें।",k:"in",inp:"tel",ph:"10-digit mobile number / 10 अंकों का मोबाइल नंबर",o:[]},
-{id:"Q1",en:"Are you from the Raniganj Assembly Constituency?",hi:"क्या आप रानीगंज विधानसभा क्षेत्र के निवासी हैं?",k:"rad",o:["Yes|हाँ","No|नहीं"]},
-{id:"Q2",en:"Gender",hi:"लिंग",note:"To be filled in by the survey agent based on the respondent's voice. / उत्तरदाता की आवाज़ के आधार पर सर्वेक्षण एजेंट द्वारा भरा जाए।",k:"rad",o:["Male|पुरुष","Female|महिला","Other|अन्य"]},
-{id:"Q3",en:"Could you please tell me your age?",hi:"क्या आप अपनी आयु बता सकते हैं?",note:"If the respondent does not answer, enter 99. / उत्तर न देने पर 99 दर्ज करें।",k:"in",inp:"number",ph:"Age / आयु (Years / वर्ष)",o:["99|उत्तर नहीं दिया"]}]},
-{t:"SECTION 2: POLITICAL INFORMATION|खंड 2: राजनीतिक जानकारी",q:[
-{id:"Q4",en:"Which political party did you vote for in the 2024 Lok Sabha elections?",hi:"आपने 2024 के लोकसभा चुनाव में किस राजनीतिक दल को वोट दिया था?",note:"If necessary, clarify: The election to choose Members of Parliament (MPs). / सांसद (MP) चुनने के लिए हुए चुनाव में।",k:"sel",o:vote(dk)},
-{id:"Q5",en:"Which political party did you vote for in the 2022 Uttar Pradesh Legislative Assembly elections?",hi:"आपने 2022 के उत्तर प्रदेश विधानसभा चुनाव में किस राजनीतिक दल को वोट दिया था?",note:"If necessary, clarify: The election to choose MLAs. / विधायक (MLA) चुनने के लिए हुए चुनाव में।",k:"sel",o:vote(dk)},
+{t:"SECTION 1: SCREENER|खंड 1: प्रारंभिक जानकारी", sc:["Thank you! Before we begin, I just need to confirm one quick thing.", "धन्यवाद! शुरू करने से पहले मुझे बस एक छोटी-सी बात की पुष्टि करनी है।"], q:[
+{agent:1,id:"Q0",en:"Phone Number",hi:"फ़ोन नंबर",note:"Enter the 10-digit mobile number that was dialled. / जिस 10 अंकों के मोबाइल नंबर पर कॉल की गई है, वह दर्ज करें।",k:"in",inp:"tel",ph:"10-digit mobile number / 10 अंकों का मोबाइल नंबर",o:[]},
+{id:"Q1",en:"Are you from the Raniganj Assembly Constituency?",hi:"क्या आप रानीगंज विधानसभा क्षेत्र के निवासी हैं?",k:"rad",o:["Yes|हाँ","No|नहीं"]}
+]},
+{t:"SECTION 2: YOUR AREA|खंड 2: आपका क्षेत्र", sc:["Thank you. Let's start with your area. Every area has different needs, and your answer helps show what matters most to people like you.", "धन्यवाद। सबसे पहले आपके क्षेत्र की बात करते हैं। हर क्षेत्र की ज़रूरतें अलग होती हैं, और आपके जवाब से पता चलता है कि आप जैसे लोगों के लिए सबसे ज़रूरी क्या है।"], q:[
+{id:"Q12",en:"What is the most important issue you face in your Assembly Constituency?",hi:"आपके विधानसभा क्षेत्र की सबसे बड़ी समस्या क्या है?",k:"sel",other:1,o:["Unemployment|बेरोज़गारी","Inflation|महँगाई","Roads and Infrastructure|सड़कें एवं बुनियादी ढाँचा","Electricity Supply|बिजली की आपूर्ति","Water Supply|पानी की आपूर्ति","Healthcare|स्वास्थ्य सेवाएँ","Education|शिक्षा","Law and Order|कानून-व्यवस्था","Agriculture and Farmers' Issues|कृषि एवं किसानों की समस्याएँ","Corruption|भ्रष्टाचार","Other|अन्य"]}
+]},
+{t:"SECTION 3: POLITICAL OPINION|खंड 3: राजनीतिक राय", sc:["Thank you, that was helpful. Now a few questions on the political situation in Uttar Pradesh. There are no right or wrong answers; we only want your honest opinion, and this takes about a minute.", "धन्यवाद, यह बहुत मददगार रहा। अब उत्तर प्रदेश की राजनीतिक स्थिति पर कुछ सवाल हैं। यहाँ कोई जवाब सही या गलत नहीं है; हमें सिर्फ़ आपकी सच्ची राय जाननी है, और इसमें लगभग एक मिनट लगेगा।"], q:[
 {id:"Q6",en:"If Uttar Pradesh Assembly elections were held today, which political party would you vote for?",hi:"यदि आज उत्तर प्रदेश विधानसभा चुनाव हों, तो आप किस राजनीतिक दल को वोट देना चाहेंगे?",k:"sel",o:vote(["Undecided|अभी तय नहीं किया है",PNA])},
 {id:"Q7",en:"Whom would you like to see as the Chief Minister of Uttar Pradesh after the next Assembly elections?",hi:"अगले विधानसभा चुनाव के बाद आप उत्तर प्रदेश के मुख्यमंत्री के रूप में किसे देखना चाहेंगे?",k:"sel",o:cm.map(x=>x.join("|")),other:1},
-{id:"Q8",en:"How satisfied are you with the work of the BJP government in Uttar Pradesh?",hi:"आप उत्तर प्रदेश में भाजपा सरकार के कामकाज से कितने संतुष्ट हैं?",k:"rad",o:["Very Satisfied (1)|बहुत संतुष्ट","Partially Satisfied (2)|आंशिक रूप से संतुष्ट","Partially Dissatisfied (3)|आंशिक रूप से असंतुष्ट","Dissatisfied (4)|असंतुष्ट"]}]},
-{t:"SECTION 3: PERSONAL AND SOCIAL PROFILE|खंड 3: व्यक्तिगत एवं सामाजिक जानकारी",q:[
+{id:"Q8",en:"How satisfied are you with the work of the BJP government in Uttar Pradesh?",hi:"आप उत्तर प्रदेश में भाजपा सरकार के कामकाज से कितने संतुष्ट हैं?",k:"rad",o:["Very Satisfied (1)|बहुत संतुष्ट","Partially Satisfied (2)|आंशिक रूप से संतुष्ट","Partially Dissatisfied (3)|आंशिक रूप से असंतुष्ट","Dissatisfied (4)|असंतुष्ट"]},
+{id:"Q13",en:"In your opinion, who is the most prominent leader in the BJP?",hi:"आपकी राय में भाजपा का सबसे प्रमुख नेता कौन है?",k:"in",inp:"text",ph:"Leader's Name / नेता का नाम",o:[]},
+{id:"Q14",en:"In your opinion, who is the most prominent leader in the SP?",hi:"आपकी राय में समाजवादी पार्टी (सपा) का सबसे प्रमुख नेता कौन है?",k:"in",inp:"text",ph:"Leader's Name / नेता का नाम",o:[]}
+]},
+{t:"SECTION 4: PAST VOTING|खंड 4: पिछला मतदान", sc:["Just two quick questions about your earlier votes. They help us understand how opinions have changed over time. A rough answer is fine, and you can say \"I don't remember\".", "आपके पिछले मतदान के बारे में बस दो छोटे सवाल हैं। इनसे समझने में मदद मिलती है कि समय के साथ लोगों की राय कैसे बदली है। मोटा-मोटा जवाब भी चलेगा, और याद न हो तो आप \"याद नहीं\" कह सकते हैं।"], q:[
+{id:"Q4",en:"Which political party did you vote for in the 2024 Lok Sabha elections?",hi:"आपने 2024 के लोकसभा चुनाव में किस राजनीतिक दल को वोट दिया था?",note:"If necessary, clarify: The election to choose Members of Parliament (MPs). / सांसद (MP) चुनने के लिए हुए चुनाव में।",k:"sel",o:vote(dk)},
+{id:"Q5",en:"Which political party did you vote for in the 2022 Uttar Pradesh Legislative Assembly elections?",hi:"आपने 2022 के उत्तर प्रदेश विधानसभा चुनाव में किस राजनीतिक दल को वोट दिया था?",note:"If necessary, clarify: The election to choose MLAs. / विधायक (MLA) चुनने के लिए हुए चुनाव में।",k:"sel",o:vote(dk)}
+]},
+{t:"SECTION 5: ABOUT YOU|खंड 5: आपके बारे में", sc:["Almost done, thank you for your patience. The last few questions are about you. They are used only to group answers together, and you are free to skip any of them.", "बस लगभग हो गया, आपके धैर्य के लिए धन्यवाद। आख़िरी कुछ सवाल आपके बारे में हैं। इनका उपयोग सिर्फ़ जवाबों को समूहों में बाँटने के लिए होता है, और आप किसी भी सवाल को छोड़ सकते हैं।"], q:[
+{id:"Q3",en:"Could you please tell me your age?",hi:"क्या आप अपनी आयु बता सकते हैं?",note:"If the respondent does not answer, enter 99. / उत्तर न देने पर 99 दर्ज करें।",k:"in",inp:"number",ph:"Age / आयु (Years / वर्ष)",o:["99|उत्तर नहीं दिया"]},
 {id:"Q9",en:"Could you please tell me your religion?",hi:"क्या आप अपना धर्म बता सकते हैं?",k:"sel",o:["Hindu|हिंदू","Muslim|मुस्लिम","Christian|ईसाई","Sikh|सिख","Buddhist|बौद्ध","Jain|जैन","Other|अन्य",PNA]},
 {id:"Q10",en:"Could you please tell me your social category?",hi:"क्या आप अपनी सामाजिक श्रेणी बता सकते हैं?",k:"rad",o:["General|सामान्य वर्ग","OBC|अन्य पिछड़ा वर्ग","SC|अनुसूचित जाति","ST|अनुसूचित जनजाति","Other|अन्य",PNA]},
-{id:"Q11",en:"Could you please tell me your caste?",hi:"क्या आप अपनी जाति बता सकते हैं?",k:"sel",other:1,o:[]},
-{id:"Q12",en:"What is the most important issue you face in your Assembly Constituency?",hi:"आपके विधानसभा क्षेत्र की सबसे बड़ी समस्या क्या है?",k:"sel",other:1,o:["Unemployment|बेरोज़गारी","Inflation|महँगाई","Roads and Infrastructure|सड़कें एवं बुनियादी ढाँचा","Electricity Supply|बिजली की आपूर्ति","Water Supply|पानी की आपूर्ति","Healthcare|स्वास्थ्य सेवाएँ","Education|शिक्षा","Law and Order|कानून-व्यवस्था","Agriculture and Farmers' Issues|कृषि एवं किसानों की समस्याएँ","Corruption|भ्रष्टाचार","Other|अन्य"]},
-{id:"Q13",en:"In your opinion, who is the most prominent leader in the BJP?",hi:"आपकी राय में भाजपा का सबसे प्रमुख नेता कौन है?",k:"in",inp:"text",ph:"Leader's Name / नेता का नाम",o:[]},
-{id:"Q14",en:"In your opinion, who is the most prominent leader in the SP?",hi:"आपकी राय में समाजवादी पार्टी (सपा) का सबसे प्रमुख नेता कौन है?",k:"in",inp:"text",ph:"Leader's Name / नेता का नाम",o:[]}]}
+{id:"Q11",en:"Could you please tell me your caste?",hi:"क्या आप अपनी जाति बता सकते हैं?",k:"sel",other:1,o:[]}
+]},
+{t:"SECTION 6: SURVEY AGENT DETAILS|खंड 6: सर्वेक्षण एजेंट का विवरण", q:[
+{agent:1,id:"Q2",en:"Gender",hi:"लिंग",note:"To be filled in by the survey agent based on the respondent's voice. / उत्तरदाता की आवाज़ के आधार पर सर्वेक्षण एजेंट द्वारा भरा जाए।",k:"rad",o:["Male|पुरुष","Female|महिला","Other|अन्य"]}
+]},
 ];
 const STAT=["Completed|पूरा हुआ","Partially Completed|आंशिक रूप से पूरा हुआ","Respondent Refused|उत्तरदाता ने मना किया","No Response|कोई उत्तर नहीं मिला",PDO,"Call Back Required|दोबारा कॉल करना है","Other|अन्य"];
 const startedAt=new Date();const ans={},auto={},oth={};let QS=[],statusAuto=false,statusPrev="";
 const f=document.getElementById("f");
 const lab=o=>o[1]?o[0]+" / "+o[1]:o[0];
 const esc=s=>s.replace(/"/g,"&quot;");
-let h="";
-S.forEach(sec=>{const[a,b]=sec.t.split("|");h+=`<h2>${a}<br>${b}</h2>`;
+let h="",dn=0;
+S.forEach(sec=>{const[a,b]=sec.t.split("|");h+=`<h2>${a}<br>${b}</h2>`;if(sec.sc)h+=`<div class="script"><div class="otag">📣 Say / बोलें</div><p>${sec.sc[0]}</p><p>${sec.sc[1]}</p></div>`;
 sec.q.forEach(q=>{QS.push(q);
 const opts=[...q.o.map(O),O(PDO)];
 let c="";
@@ -107,9 +120,8 @@ if(q.k=="sel"){c=`<select data-q="${q.id}"><option value="">— Select / चु�
  if(q.other)c+=`<input type="text" data-oth="${q.id}" placeholder="Please specify / कृपया बताएं" style="display:none">`;}
 else{ if(q.k=="in")c+=`<input type="${q.inp}" ${q.inp=="number"?'min="1" max="99"':""} data-in="${q.id}" placeholder="${q.ph}">`;
  c+=`<div class="chips">${opts.map(o=>`<label class="chip ${o[0]==PD?"pd":""}"><input type="radio" name="${q.id}" value="${esc(o[0])}">${lab(o)}</label>`).join("")}</div>`;}
-h+=`<div class="q" id="c${q.id}"><div class="qt">${q.id}. ${q.en}</div><div class="qh">${q.hi}</div>${q.note?`<div class="note">${q.note}</div>`:""}${c}</div>`;});});
-h+=`<h2>SECTION 4: SURVEY AGENT DETAILS<br>खंड 4: सर्वेक्षण एजेंट का विवरण</h2>
-<div class="q" id="cQ15"><div class="qt">Q15. Enter your Agent ID.</div><div class="qh">प्रश्न 15. अपनी एजेंट आईडी दर्ज करें।</div><input type="tel" id="agent" inputmode="numeric" maxlength="3" pattern="[0-9]{3}" placeholder="3-digit Agent ID / 3 अंकों की एजेंट आईडी"></div>
+h+=`<div class="q" id="c${q.id}"><div class="qt">${q.agent?"👤 Agent entry:":(++dn)+"."} ${q.en} <small class="idt">${q.id}</small></div><div class="qh">${q.hi}</div>${q.note?`<div class="note">${q.note}</div>`:""}${c}</div>`;});});
+h+=`<div class="q" id="cQ15"><div class="qt">Q15. Enter your Agent ID.</div><div class="qh">प्रश्न 15. अपनी एजेंट आईडी दर्ज करें।</div><input type="tel" id="agent" inputmode="numeric" maxlength="3" pattern="[0-9]{3}" placeholder="3-digit Agent ID / 3 अंकों की एजेंट आईडी"></div>
 <div class="q"><div class="qt">Q16. Agent Remarks.</div><div class="qh">एजेंट की टिप्पणी।</div><textarea id="remarks" rows="3" placeholder="Remarks / टिप्पणी"></textarea></div>
 <button id="sub">Submit / जमा करें</button>`;
 f.innerHTML=h;
@@ -117,7 +129,7 @@ let pages=[],cp=0,lastP=-1;
 (function(){let cur=null;[...f.children].forEach(n=>{if(n.tagName=="H2"&&!/SURVEY STATUS/.test(n.textContent)){cur=document.createElement("section");cur.className="pg";f.appendChild(cur);pages.push(cur);}cur.appendChild(n);});
  const intro=document.createElement("section");intro.className="pg";intro.appendChild(document.querySelector(".open"));intro.appendChild(document.querySelector(".main>.ins")||document.querySelector("main>.ins"));
  f.insertBefore(intro,f.firstChild);pages.unshift(intro);})();
-const TITLES=["Introduction / परिचय","Section 1 / खंड 1","Section 2 / खंड 2","Section 3 / खंड 3","Section 4 / खंड 4"];
+const TITLES=["Introduction / परिचय","Screener / प्रारंभिक","Your area / आपका क्षेत्र","Political opinion / राजनीतिक राय","Past voting / पिछला मतदान","About you / आपके बारे में","Agent details / एजेंट विवरण"];
 function showPage(i){cp=Math.max(0,Math.min(pages.length-1,i));pages.forEach((x,k)=>x.classList.toggle("on",k==cp));
  document.getElementById("fill").style.width=((cp+1)/pages.length*100)+"%";
  document.getElementById("stepl").textContent="Step "+(cp+1)+" of "+pages.length+" — "+TITLES[cp];
