@@ -79,7 +79,7 @@ const S=[
 {id:"Q14",en:"In your opinion, who is the most prominent leader in the BJP?",hi:"आपकी राय में भाजपा का सबसे प्रमुख नेता कौन है?",note:"Administrator's Note: Q14 duplicates Q13 in the original questionnaire. Confirm whether Q14 should be replaced. / प्रशासक टिप्पणी: प्रश्न 14, प्रश्न 13 के समान है; कृपया पुष्टि करें।",k:"in",inp:"text",ph:"Leader's Name / नेता का नाम",o:[]}]}
 ];
 const STAT=["Completed|पूरा हुआ","Partially Completed|आंशिक रूप से पूरा हुआ","Respondent Refused|उत्तरदाता ने मना किया","No Response|कोई उत्तर नहीं मिला",PDO,"Call Back Required|दोबारा कॉल करना है","Other|अन्य"];
-const ans={},auto={},oth={};let QS=[],statusAuto=false,statusPrev="";
+const startedAt=new Date();const ans={},auto={},oth={};let QS=[],statusAuto=false,statusPrev="";
 const f=document.getElementById("f");
 const lab=o=>o[1]?o[0]+" / "+o[1]:o[0];
 const esc=s=>s.replace(/"/g,"&quot;");
@@ -167,7 +167,7 @@ async function saveNow(){
  const r=window._r,m=document.getElementById("saveMsg"),rb=document.getElementById("retry");rb.style.display="none";
  const c=window.APP_CONFIG||{};
  if(!c.SUPABASE_URL||c.SUPABASE_URL.includes("YOUR-")){m.textContent="⚠️ Supabase not configured (edit config.js). Download the response below. / Supabase सेट नहीं है।";return;}
- const row={id:r._id,agent_id:r.Q15_AgentID,remarks:r.Q16_Remarks,survey_status:r.SurveyStatus,q8_rating:r.Q8_rating?+r.Q8_rating:null,raw:r};
+ const now=new Date();const row={id:r._id,started_at:startedAt.toISOString(),submitted_at:now.toISOString(),duration_seconds:Math.round((now-startedAt)/1000),agent_id:r.Q15_AgentID,remarks:r.Q16_Remarks,survey_status:r.SurveyStatus,q8_rating:r.Q8_rating?+r.Q8_rating:null,raw:r};
  for(let i=1;i<=14;i++)row["q"+i]=r["Q"+i]||null;
  try{
   const res=await fetch(c.SUPABASE_URL+"/rest/v1/survey_responses",{method:"POST",headers:{"Content-Type":"application/json",apikey:c.SUPABASE_ANON_KEY,Authorization:"Bearer "+c.SUPABASE_ANON_KEY,Prefer:"return=minimal"},body:JSON.stringify(row)});

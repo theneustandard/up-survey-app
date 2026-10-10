@@ -1,0 +1,6 @@
+{
+  "name": "up-survey-app",
+  "private": true,
+  "scripts": { "build": "node scripts/setup-db.js" },
+  "dependencies": { "pg": "8.11.5" }
+}
