@@ -159,6 +159,10 @@ button.s{background:#fff;color:#1b2a41;border:1.5px solid var(--bd)}button.s:hov
 .cbl{display:none;position:absolute;left:0;right:0;top:calc(100% + 6px);max-height:min(300px,45vh);overflow:auto;background:#fff;border:1.5px solid var(--bd);border-radius:14px;box-shadow:0 16px 32px -14px rgba(20,33,61,.35);z-index:30}
 .cb.show .cbl{display:block}.cbo{padding:11px 16px;cursor:pointer;line-height:1.4}.cbo:hover{background:#eef2ff}.cbo.sel{background:#e8f5ef;font-weight:700}.cbn{padding:14px 16px;color:var(--mu)}
 .cbi{scroll-margin-top:170px}
+.req{color:#d92d20;font-weight:700}
+#toast{position:fixed;left:50%;bottom:92px;transform:translate(-50%,20px);background:#1b2a41;color:#fff;padding:12px 20px;border-radius:12px;font-size:.92rem;opacity:0;pointer-events:none;transition:all .25s;z-index:40;max-width:92vw;text-align:center}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+.q.err{border-color:#d92d20!important;box-shadow:0 0 0 4px rgba(217,45,32,.12)}
 </style>
 </head>
 <body>
@@ -180,6 +184,7 @@ button.s{background:#fff;color:#1b2a41;border:1.5px solid var(--bd)}button.s:hov
 <div style="text-align:center;margin:18px 0"><button style="padding:14px 32px;font-size:1.1rem" onclick="location.reload()">नया सर्वेक्षण शुरू करें / Start New Survey</button></div>
 </div>
 </main>
+<div id="toast"></div>
 <nav id="nav"><button class="s" id="bk">← पीछे / Back</button><span id="stp"></span><button id="nx">आगे / Next →</button></nav>
 <script src="config.js"></script>
 <script>
@@ -235,7 +240,7 @@ if(q.k=="sel"){c=(q.search?`<div class="cb" data-cb="${q.id}"><input type="text"
 else{ if(q.k=="in")c+=`<input type="${q.inp}" ${q.inp=="number"?'min="1" max="99"':""} data-in="${q.id}" placeholder="${q.ph}">`;
  c+=`<div class="chips">${opts.map(o=>`<label class="chip ${o[0]==PD?"pd":""}"><input type="radio" name="${q.id}" value="${esc(o[0])}">${lab(o)}</label>`).join("")}</div>`;
  if(q.other)c+=`<input type="text" data-oth="${q.id}" placeholder="कृपया बताएं / Please specify" style="display:none">`;}
-h+=`<div class="q" id="c${q.id}"><div class="qh"><span class="qn">${q.agent?"👤 Agent":(++dn)+"."}</span> ${q.hi}</div><div class="qt">${q.en} <small class="idt">${q.id}</small></div>${q.note?`<div class="note">${q.note.replace(/^(.*?) \/ (.*)$/s,"<b>$1</b> / $2")}</div>`:""}${c}</div>`;});});
+h+=`<div class="q" id="c${q.id}"><div class="qh"><span class="qn">${q.agent?"👤 Agent":(++dn)+"."}</span> ${q.hi} <span class="req">*</span></div><div class="qt">${q.en} <small class="idt">${q.id}</small></div>${q.note?`<div class="note">${q.note.replace(/^(.*?) \/ (.*)$/s,"<b>$1</b> / $2")}</div>`:""}${c}</div>`;});});
 h+=`<div class="q" id="cQ15"><div class="qh"><span class="qn">👤 Agent</span> प्रश्न 15. अपनी एजेंट आईडी दर्ज करें।</div><div class="qt">Q15. Enter your Agent ID.</div><input type="tel" id="agent" inputmode="numeric" maxlength="3" pattern="[0-9]{3}" placeholder="3-digit Agent ID / 3 अंकों की एजेंट आईडी"></div>
 <div class="q"><div class="qh"><span class="qn">👤 Agent</span> एजेंट की टिप्पणी।</div><div class="qt">Q16. Agent Remarks.</div><textarea id="remarks" rows="3" placeholder="टिप्पणी / Remarks"></textarea></div>
 <button id="sub">जमा करें / Submit</button>`;
@@ -251,7 +256,9 @@ function showPage(i){cp=Math.max(0,Math.min(pages.length-1,i));pages.forEach((x,
  document.getElementById("stp").textContent=(cp+1)+" / "+pages.length;
  document.getElementById("bk").disabled=cp==0;document.getElementById("nx").style.visibility=cp==pages.length-1?"hidden":"visible";
  window.scrollTo({top:0,behavior:"smooth"});}
-document.getElementById("bk").onclick=()=>showPage(cp-1);document.getElementById("nx").onclick=()=>showPage(cp+1);
+let hist=[];document.getElementById("bk").onclick=()=>showPage(hist.length?hist.pop():cp-1);document.getElementById("nx").onclick=()=>{const miss=qMiss(QS.filter(q=>pages[cp].querySelector("#c"+q.id)));if(miss.length){flag(miss);return;}
+ const tq=pdIdx()>=0?QS[pdIdx()].id:(ans.Q1==="No"&&!auto.Q1?"Q1":null);
+ hist.push(cp);showPage(tq&&pages[cp].querySelector("#c"+tq)?pages.length-1:cp+1);};
 showPage(0);
 
 function pdIdx(){return QS.findIndex(q=>ans[q.id]===PD&&!auto[q.id]);}
@@ -298,22 +305,28 @@ f.addEventListener("mousedown",e=>{if(e.target.closest&&e.target.closest(".cbl")
 f.addEventListener("click",e=>{const d=e.target.closest&&e.target.closest(".cbo");if(d)cbPick(d.closest(".cb").dataset.cb,d.dataset.v);});
 f.addEventListener("keydown",e=>{const t=e.target;if(!(t.classList&&t.classList.contains("cbi")))return;const id=t.closest(".cb").dataset.cb;
  if(e.key==="Enter"){e.preventDefault();const d=cbEl(id).querySelector(".cbo");if(d)cbPick(id,d.dataset.v);}else if(e.key==="Escape")t.blur();});
+function qMiss(list){return list.filter(q=>{const v=String(ans[q.id]||"").trim();if(!v)return true;
+ if(q.id=="Q0"&&v!==PD&&!/^[6-9]\d{9}$/.test(v))return true;
+ if(q.other&&v===(q.ov||"Other")&&!String(oth[q.id]||"").trim())return true;return false;});}
+let toastT;function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("on");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("on"),3500);}
+function flag(miss){document.querySelectorAll(".q.err").forEach(x=>x.classList.remove("err"));miss.forEach(q=>document.getElementById("c"+q.id).classList.add("err"));
+ if(miss.length){document.getElementById("c"+miss[0].id).scrollIntoView({behavior:"smooth",block:"center"});toast("कृपया सभी प्रश्नों के उत्तर दें / Please answer all questions");}}
 function sync(){
  fillCaste();
  const p=pdIdx(),ni=(p<0&&ans.Q1==="No"&&!auto.Q1)?QS.findIndex(q=>q.id=="Q1"):-1;
  QS.forEach((q,i)=>{
-  if(p>=0&&i>p){ans[q.id]=PD;auto[q.id]=true;}
+  if(p>=0&&i>p&&!q.agent){ans[q.id]=PD;auto[q.id]=true;}
   else if(ni>=0&&i>ni&&!q.agent){ans[q.id]=SO;auto[q.id]=true;}
   else if(auto[q.id]){ans[q.id]="";auto[q.id]=false;}
   const card=document.getElementById("c"+q.id),lock=!!auto[q.id],v=ans[q.id]||"";
-  card.classList.toggle("locked",lock);
+  card.classList.toggle("locked",lock);if(v&&!qMiss([q]).length)card.classList.remove("err");
   card.querySelectorAll("input[type=radio]").forEach(r=>{r.checked=r.value===v;r.disabled=lock;});
   const s=card.querySelector("select");if(s){s.value=v;s.disabled=lock||(q.id=="Q11"&&!ans.Q10);}
   const t=card.querySelector("[data-in]");if(t){t.value=(v===PD||!v||isNaN(v)&&q.inp=="number"||card.querySelector(`input[type=radio][value="${CSS.escape?v:v}"]`)&&q.inp=="text"&&v===PNA.split("|")[0])?"":v;t.disabled=lock;}
   const ot=card.querySelector("[data-oth]");if(ot){ot.style.display=v===(q.ov||"Other")?"block":"none";ot.disabled=lock;if(lock)ot.value="";}
  });
  QS.filter(q=>q.search).forEach(q=>applyFilter(q.id));
- const k=p>=0?"p":ni>=0?"n":"";if(k&&k!==lastK)showPage(pages.length-1);lastK=k;
+ const k=p>=0?"p":ni>=0?"n":"";if(k&&k!==lastK){hist.push(cp);showPage(pages.length-1);}lastK=k;
  const bn=document.getElementById("banner");bn.style.display=(p>=0||ni>=0)?"block":"none";bn.textContent=ni>=0?"🚫 रानीगंज निवासी नहीं — सर्वेक्षण समाप्त। कृपया एजेंट विवरण भरें। / Not a Raniganj resident — survey ended. Please fill the agent details.":"📵 फ़ोन डिस्कनेक्ट है — शेष प्रश्न लॉक हैं / Phone Disconnected — remaining questions are locked";
 }
 f.addEventListener("change",e=>{const t=e.target;
@@ -337,7 +350,7 @@ function build(){
  r.SurveyStatus=pdIdx()>=0?PD:(ans.Q1==="No"&&!auto.Q1)?"Screened Out":(QS.every(q=>ans[q.id])?"Completed":"Partially Completed");return r;}
 document.getElementById("sub").onclick=()=>{
  document.querySelectorAll(".err").forEach(x=>x.classList.remove("err"));
- const bad=[];
+ const bad=[];qMiss(QS).forEach(q=>{bad.push(q.id);document.getElementById("c"+q.id).classList.add("err");});
  if(ans.Q0&&ans.Q0!==PD&&!/^[6-9]\d{9}$/.test(ans.Q0)){bad.push("Q0 (गलत नंबर / invalid phone)");document.getElementById("cQ0").classList.add("err");}
  if(!/^\d{3}$/.test(document.getElementById("agent").value)){bad.push("Q15 (3 अंकों की आईडी / 3-digit Agent ID)");document.getElementById("cQ15").classList.add("err");}
  if(bad.length){showPage(pages.findIndex(x=>x.querySelector(".err")));alert("कृपया पूरा करें / Please complete: "+bad.join(", "));document.querySelector(".err").scrollIntoView({behavior:"smooth",block:"center"});return;}
