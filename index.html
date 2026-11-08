@@ -238,6 +238,22 @@ button.s{background:#fff;color:#287dfa;border:1.5px solid #287dfa;box-shadow:non
 .rve{display:flex;gap:12px;justify-content:space-between;align-items:center;padding:9px 0;border-top:1px solid #f8d7d3;font-size:.9rem}.rve:first-of-type{margin-top:8px}
 .rve .edit2{flex:none;border-color:#b42318;color:#b42318}
 .rvok{background:#eafaf1;border:1px solid #bfe9d2;color:#14804a;border-radius:14px;padding:12px 18px;margin-bottom:14px;font-weight:700}
+
+/* ===== UX AUDIT FIXES ===== */
+#track{display:block!important;height:4px;margin:8px 0 0}
+#stepl{display:block!important;background:none;color:var(--mu);text-align:left;padding:0;margin:5px 0 8px;font-size:.72rem;letter-spacing:0;text-transform:none}
+.banner{position:sticky;top:calc(var(--hh,60px) + 8px);z-index:9;margin:10px 0;padding:9px 14px;font-size:.85rem;line-height:1.35}
+.pg{scroll-margin-top:calc(var(--hh,60px) + 14px)}.cbi{scroll-margin-top:calc(var(--hh,60px) + 20px)}
+.pg.reach>.sh{cursor:pointer}.pg.reach>.sh:hover{background:#f7faff;border-radius:18px}
+.chip:focus-within{outline:2px solid #287dfa;outline-offset:2px}
+::placeholder{color:#7b879b}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}input[type=number]{-moz-appearance:textfield}
+.cbo.hl{background:#eaf2ff}
+#done{max-width:640px;margin:0 auto}
+#done::before{content:"✓";display:flex;width:68px;height:68px;border-radius:50%;background:#20b26b;color:#fff;font-size:2.1rem;align-items:center;justify-content:center;margin:28px auto 8px;box-shadow:0 12px 24px -10px rgba(32,178,107,.7)}
+#done>h2{text-align:center;font-size:1.2rem;margin:6px 0 14px}#done>.q{margin-bottom:14px}
+#saveMsg{text-align:center;font-weight:600}
+@media(max-width:700px){.open{padding:20px 18px}.sb{padding:14px 10px 18px}.sh{padding:14px}.q{padding:18px 16px}.banner{font-size:.8rem;padding:7px 12px}}
 </style>
 </head>
 <body>
@@ -308,16 +324,16 @@ const esc=s=>s.replace(/"/g,"&quot;");
 let h="",dn=0;
 S.forEach(sec=>{const[a,b]=sec.t.split("|");h+=`<h2>${b}<br>${a}</h2>`;if(sec.sc)h+=`<div class="script"><div class="otag">📣 बोलें / Say</div><p>${sec.sc[1]}</p><p>${sec.sc[0]}</p></div>`;
 sec.q.forEach(q=>{QS.push(q);
-const opts=[...q.o.map(O),O(PDO)];
+const opts=q.id=="Q2"?q.o.map(O):[...q.o.map(O),O(PDO)];
 let c="";
 if(q.k=="sel"){c=(q.search?`<div class="cb" data-cb="${q.id}"><input type="text" class="cbi" autocomplete="off" placeholder="🔍 चुनें या खोजें / Select or search"><div class="cbl"></div></div>`:"")+`<select data-q="${q.id}"><option value="">— चुनें / Select —</option>${opts.map(o=>{const v=o[0]; const sp=o[0]==PD; return `<option value="${esc(v)}">${lab(o)}</option>`}).join("")}</select>`;
  if(q.other)c+=`<input type="text" data-oth="${q.id}" placeholder="कृपया बताएं / Please specify" style="display:none">`;}
-else{ if(q.k=="in")c+=`<input type="${q.inp}" ${q.inp=="number"?'min="1" max="99"':""} data-in="${q.id}" placeholder="${q.ph}">`;
+else{ if(q.k=="in")c+=`<input type="${q.inp}" ${q.inp=="number"?'min="1" max="99" inputmode="numeric"':""} data-in="${q.id}" placeholder="${q.ph}">`;
  c+=`<div class="chips">${opts.map(o=>`<label class="chip ${o[0]==PD?"pd":""}"><input type="radio" name="${q.id}" value="${esc(o[0])}">${lab(o)}</label>`).join("")}</div>`;
  if(q.other)c+=`<input type="text" data-oth="${q.id}" placeholder="कृपया बताएं / Please specify" style="display:none">`;}
 h+=`<div class="q" id="c${q.id}"><div class="qh"><span class="qn">${q.agent?"👤 Agent":(++dn)+"."}</span> ${q.hi} <span class="req">*</span></div><div class="qt">${q.en} <small class="idt">${q.id}</small></div>${q.note?`<div class="note">${q.note.replace(/^(.*?) \/ (.*)$/s,"<b>$1</b> / $2")}</div>`:""}${c}</div>`;});});
-h+=`<div class="q" id="cQ15"><div class="qh"><span class="qn">👤 Agent</span> प्रश्न 15. अपनी एजेंट आईडी दर्ज करें।</div><div class="qt">Q15. Enter your Agent ID.</div><input type="tel" id="agent" inputmode="numeric" maxlength="3" pattern="[0-9]{3}" placeholder="3-digit Agent ID / 3 अंकों की एजेंट आईडी"></div>
-<div class="q"><div class="qh"><span class="qn">👤 Agent</span> एजेंट की टिप्पणी।</div><div class="qt">Q16. Agent Remarks.</div><textarea id="remarks" rows="3" placeholder="टिप्पणी / Remarks"></textarea></div>
+h+=`<div class="q" id="cQ15"><div class="qh"><span class="qn">👤 Agent</span> अपनी एजेंट आईडी दर्ज करें। <span class="req">*</span></div><div class="qt">Enter your Agent ID. <small class="idt">Q15</small></div><input type="tel" id="agent" inputmode="numeric" maxlength="3" pattern="[0-9]{3}" placeholder="3-digit Agent ID / 3 अंकों की एजेंट आईडी"></div>
+<div class="q"><div class="qh"><span class="qn">👤 Agent</span> एजेंट की टिप्पणी (वैकल्पिक)।</div><div class="qt">Agent Remarks (optional). <small class="idt">Q16</small></div><textarea id="remarks" rows="3" placeholder="टिप्पणी / Remarks"></textarea></div>
 <button id="sub">जमा करें / Submit</button>`;
 f.innerHTML=h;
 let pages=[],cp=0,lastK="";
@@ -333,7 +349,7 @@ pages.forEach((x,k)=>{const [hi,en]=TITLES[k].split(" / ");const sb=document.cre
  const sh=document.createElement("div");sh.className="sh";
  sh.innerHTML='<span class="sn"></span><div class="stt"><b></b><small></small></div><div class="ssum"></div><button type="button" class="edit">✎ बदलें / Edit</button>';
  sh.querySelector("b").textContent=hi;sh.querySelector("small").textContent=en||"";
- sh.querySelector(".edit").onclick=()=>{hist.push(cp);showPage(k);};
+ sh.querySelector(".edit").onclick=()=>{hist.push(cp);showPage(k);};sh.onclick=ev=>{if(x.classList.contains("reach")&&!ev.target.closest(".edit")){hist.push(cp);showPage(k);}};
 
  const ft=document.createElement("div");ft.className="sf";
  ft.innerHTML='<button type="button" class="s sbk">← पीछे / Back</button><span class="scnt"></span><button type="button" class="snx">आगे / Continue →</button>';
@@ -364,22 +380,20 @@ function renderReview(){const box=document.getElementById("rv");box.innerHTML=""
    r.appendChild(t);r.appendChild(bt);pn.appendChild(r);});}
  else{pn.className="rvok";pn.textContent="✓ सभी जानकारी पूरी है / All details are complete";}
  box.appendChild(pn);
- for(let k=1;k<last;k++){const pgx=pages[k],blk=document.createElement("div");blk.className="rvb";
-  const h=document.createElement("div");h.className="rvh";const t=document.createElement("b");t.textContent=TITLES[k];
-  const e=document.createElement("button");e.type="button";e.className="s edit2";e.textContent="✎ बदलें / Edit";e.onclick=()=>{hist.push(cp);showPage(k);};h.appendChild(t);h.appendChild(e);blk.appendChild(h);
-  const rows=[];QS.filter(q=>pgx.querySelector("#c"+q.id)).forEach(q=>{let v=ans[q.id]||"";if(q.other&&v===(q.ov||"Other")&&oth[q.id])v+=": "+oth[q.id];rows.push([SL[q.id],v,qReason(q)]);});
-  if(pgx.querySelector("#cQ15")){const av=document.getElementById("agent").value;rows.push(["एजेंट आईडी / Agent ID",av,/^\d{3}$/.test(av)?"":AGERR]);const rm=document.getElementById("remarks").value.trim();rows.push(["टिप्पणी / Remarks",rm||"—",""]);}
-  rows.forEach(([l,v,rs])=>{const r=document.createElement("div");r.className="rvr";const a=document.createElement("span");a.textContent=l;const b=document.createElement("b");
-   if(rs){b.textContent=(v&&v!==PD?v+" — ":"")+rs;b.className="miss";}else{b.textContent=v;}r.appendChild(a);r.appendChild(b);blk.appendChild(r);});
-  box.appendChild(blk);}}
+}
 function secDone(j){return !qMiss(QS.filter(q=>pages[j].querySelector("#c"+q.id))).length&&(!pages[j].querySelector("#cQ15")||/^\d{3}$/.test(document.getElementById("agent").value));}
-function renderSections(){maxR=Math.max(maxR,cp);if(cp==pages.length-1)renderReview();
+function setHH(){document.documentElement.style.setProperty("--hh",document.getElementById("top").offsetHeight+"px");}
+window.addEventListener("resize",setHH);setHH();document.getElementById("toast").setAttribute("role","status");document.getElementById("toast").setAttribute("aria-live","polite");
+window.addEventListener("beforeunload",e=>{if(!window._r&&Object.values(ans).some(v=>v&&v!==PD)){e.preventDefault();e.returnValue="";}});
+function renderSections(){setHH();maxR=Math.max(maxR,cp);if(cp==pages.length-1)renderReview();
  pages.forEach((x,k)=>{const done=k<=maxR&&k!=cp;x.classList.toggle("up",k>maxR);x.classList.toggle("reach",done);
   x.querySelector(".sn").textContent=done?"✓":k+1;const sm=x.querySelector(".ssum");sm.innerHTML="";
   if(!done)return;
   if(k==0){const e=document.createElement("span");e.className="sm";e.textContent="✓ स्क्रिप्ट पढ़ी गई / Script read";sm.appendChild(e);return;}
   QS.filter(q=>x.querySelector("#c"+q.id)).forEach(q=>{let v=ans[q.id];if(!v)return;if(q.other&&v===(q.ov||"Other")&&oth[q.id])v+=": "+oth[q.id];
-   const e=document.createElement("span");e.className="sm";const i=document.createElement("i");i.textContent=SL[q.id];const b=document.createElement("b");b.textContent=v;e.appendChild(i);e.appendChild(b);sm.appendChild(e);});});}
+   const e=document.createElement("span");e.className="sm";const i=document.createElement("i");i.textContent=SL[q.id];const b=document.createElement("b");b.textContent=v;e.appendChild(i);e.appendChild(b);sm.appendChild(e);});
+  if(x.querySelector("#cQ15")){const mk=(l,v)=>{const e=document.createElement("span");e.className="sm";const i=document.createElement("i");i.textContent=l;const b=document.createElement("b");b.textContent=v;e.appendChild(i);e.appendChild(b);sm.appendChild(e);};
+   const av=document.getElementById("agent").value.trim(),rm=document.getElementById("remarks").value.trim();if(av)mk("एजेंट आईडी / Agent ID",av);if(rm)mk("टिप्पणी / Remarks",rm);}});}
 function renderTabs(){const t=document.getElementById("tabs");t.innerHTML="";
  pages.forEach((x,k)=>{const [hi,en]=TITLES[k].split(" / ");const d=document.createElement("div");d.className="tab"+(k==cp?" on":k<cp?" done":"");
   d.innerHTML='<span class="tn">'+(k<cp?"✓":k+1)+'</span><span class="tt"><b>'+hi+'</b><small>'+(en||"")+'</small></span>';t.appendChild(d);});
@@ -442,7 +456,8 @@ f.addEventListener("focusout",e=>{const t=e.target;if(t.classList&&t.classList.c
 f.addEventListener("mousedown",e=>{if(e.target.closest&&e.target.closest(".cbl"))e.preventDefault();});
 f.addEventListener("click",e=>{const d=e.target.closest&&e.target.closest(".cbo");if(d)cbPick(d.closest(".cb").dataset.cb,d.dataset.v);});
 f.addEventListener("keydown",e=>{const t=e.target;if(!(t.classList&&t.classList.contains("cbi")))return;const id=t.closest(".cb").dataset.cb;
- if(e.key==="Enter"){e.preventDefault();const d=cbEl(id).querySelector(".cbo");if(d)cbPick(id,d.dataset.v);}else if(e.key==="Escape")t.blur();});
+ if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();const L=[...cbEl(id).querySelectorAll(".cbo")];if(!L.length)return;let i=L.findIndex(x=>x.classList.contains("hl"));L.forEach(x=>x.classList.remove("hl"));i=e.key==="ArrowDown"?(i+1)%L.length:(i-1+L.length)%L.length;L[i].classList.add("hl");L[i].scrollIntoView({block:"nearest"});return;}
+ if(e.key==="Enter"){e.preventDefault();const d=cbEl(id).querySelector(".cbo.hl")||cbEl(id).querySelector(".cbo");if(d)cbPick(id,d.dataset.v);}else if(e.key==="Escape")t.blur();});
 function qMiss(list){return list.filter(q=>{const v=String(ans[q.id]||"").trim();if(!v)return true;
  if(q.id=="Q0"&&v!==PD&&!/^[6-9]\d{9}$/.test(v))return true;
  if(q.other&&v===(q.ov||"Other")&&!String(oth[q.id]||"").trim())return true;return false;});}
@@ -464,7 +479,7 @@ function sync(){
   const ot=card.querySelector("[data-oth]");if(ot){ot.style.display=v===(q.ov||"Other")?"block":"none";ot.disabled=lock;if(lock)ot.value="";}
  });
  QS.filter(q=>q.search).forEach(q=>applyFilter(q.id));
- const k=p>=0?"p":ni>=0?"n":"";if(k&&k!==lastK){hist.push(cp);showPage(pages.length-2);}lastK=k;updateFooters();
+ const k=p>=0?"p":ni>=0?"n":"";if(k&&k!==lastK){hist.push(cp);showPage(pages.length-2);toast(k=="p"?"फ़ोन डिस्कनेक्ट — शेष प्रश्न अपने-आप भर दिए गए / Remaining questions auto-filled":"रानीगंज निवासी नहीं — सर्वेक्षण समाप्त / Not a Raniganj resident — survey ended");}lastK=k;updateFooters();
  const bn=document.getElementById("banner");bn.style.display=(p>=0||ni>=0)?"block":"none";bn.textContent=ni>=0?"🚫 रानीगंज निवासी नहीं — सर्वेक्षण समाप्त। कृपया एजेंट विवरण भरें। / Not a Raniganj resident — survey ended. Please fill the agent details.":"📵 फ़ोन डिस्कनेक्ट है — शेष प्रश्न लॉक हैं / Phone Disconnected — remaining questions are locked";
 }
 f.addEventListener("change",e=>{const t=e.target;
