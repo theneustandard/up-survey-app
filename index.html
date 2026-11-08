@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="color-scheme" content="light only">
-<meta name="theme-color" content="#315cff">
+<meta name="theme-color" content="#287DFA">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -163,11 +163,86 @@ button.s{background:#fff;color:#1b2a41;border:1.5px solid var(--bd)}button.s:hov
 #toast{position:fixed;left:50%;bottom:92px;transform:translate(-50%,20px);background:#1b2a41;color:#fff;padding:12px 20px;border-radius:12px;font-size:.92rem;opacity:0;pointer-events:none;transition:all .25s;z-index:40;max-width:92vw;text-align:center}
 #toast.on{opacity:1;transform:translate(-50%,0)}
 .q.err{border-color:#d92d20!important;box-shadow:0 0 0 4px rgba(217,45,32,.12)}
+
+/* ===== TRIP.COM-STYLE THEME ===== */
+:root{--bg:#f5f7fa;--tx:#0f294d;--mu:#5b6b82;--bd:#dbe3ee;--ac:#287dfa;--acl:#eaf2ff;--org:#ff7a00}
+body{background:var(--bg);color:var(--tx)}
+main{max-width:1100px}
+#top{background:#fff;border:none;border-radius:0;box-shadow:0 0 0 100vmax #fff;clip-path:inset(0 -100vmax);border-bottom:1px solid #e3e9f2;padding:12px 0 0;overflow:visible;-webkit-backdrop-filter:none;backdrop-filter:none}
+#top h1{display:flex;flex-direction:column;font-size:1.15rem;color:#287dfa;letter-spacing:-.01em;line-height:1.25}
+#top h1 .h1e{font-size:.78rem;font-weight:500;color:var(--mu);margin:0}
+#track,#stepl{display:none}
+#tabs{display:flex;gap:8px;overflow-x:auto;padding:12px 2px 14px;scrollbar-width:none}#tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;display:flex;align-items:center;gap:9px;padding:8px 16px 8px 9px;border-radius:999px;background:#f2f5f9;color:#5b6b82;transition:all .2s}
+.tab .tn{width:26px;height:26px;border-radius:50%;background:#fff;color:#5b6b82;font-size:.78rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+.tab .tt{display:flex;flex-direction:column;line-height:1.15}.tab b{font-size:.82rem;font-weight:700}.tab small{font-size:.66rem;opacity:.8;font-weight:500}
+.tab.on{background:#287dfa;color:#fff;box-shadow:0 8px 16px -8px rgba(40,125,250,.7)}.tab.on .tn{background:#fff;color:#287dfa}
+.tab.done{background:#eaf2ff;color:#287dfa}.tab.done .tn{background:#287dfa;color:#fff}
+.banner{top:150px}
+.pg>h2{color:#0f294d;font-size:1.35rem}
+.open{background:linear-gradient(120deg,#1f6fe8 0%,#287dfa 55%,#4a9bff 100%);border-radius:20px;padding:30px 32px;color:#fff}
+.open::before{background:rgba(255,255,255,.1)}.open::after{background:rgba(255,255,255,.08)}
+.open .otag{background:#ff7a00;border:none;color:#fff}.open p{color:#f0f6ff}.open p:nth-of-type(2){color:#fff}
+.script{background:#eef5ff;border:1px solid #cfe1ff;border-left:5px solid #287dfa;border-radius:16px;color:#0f294d}
+.script .otag{background:#287dfa;color:#fff;border:none}
+.ins{background:#fff;border:none;border-left:5px solid #ff7a00;border-radius:16px;box-shadow:0 2px 12px rgba(15,41,77,.06)}
+.q{border:none;border-top:none;border-radius:16px;box-shadow:0 2px 12px rgba(15,41,77,.07);padding:24px 26px}
+.q:nth-child(even){border-top:none}.q:hover{box-shadow:0 8px 24px -10px rgba(15,41,77,.18)}
+.q.err{box-shadow:0 0 0 2px #d92d20!important}
+.qh{color:#0f294d}.qt{color:var(--mu)}.qn{color:#287dfa}
+.chip{border-radius:999px;border:1.5px solid var(--bd);background:#fff;padding:10px 18px;font-weight:500;color:#0f294d}
+.chip:hover{border-color:#287dfa;background:#f7fbff}
+.chip:has(input:checked){background:#eaf2ff;border-color:#287dfa;color:#287dfa;font-weight:700}
+.chip.pd:has(input:checked){background:#fff1f0;border-color:#d92d20;color:#d92d20}
+select,input[type=text],input[type=number],input[type=tel],textarea,.q input[type=search]{background:#f2f5f9;border:1.5px solid transparent;border-radius:12px;padding:14px 16px;color:#0f294d}
+select:focus,input:focus,textarea:focus{border-color:#287dfa;background:#fff;box-shadow:0 0 0 4px rgba(40,125,250,.14)}
+.cbl{border:none;border-radius:14px;box-shadow:0 16px 40px -12px rgba(15,41,77,.35)}.cbo:hover{background:#eaf2ff}.cbo.sel{background:#eaf2ff;color:#287dfa}
+button{border-radius:999px;background:linear-gradient(135deg,#4a9bff,#287dfa);box-shadow:0 10px 20px -10px rgba(40,125,250,.8);padding:12px 26px}
+button:hover{background:linear-gradient(135deg,#3d8bff,#1f6fe8)}
+button.s{background:#fff;color:#287dfa;border:1.5px solid #287dfa;box-shadow:none}button.s:hover{background:#f2f8ff}
+#sub,#done div>button:not(.s){background:linear-gradient(135deg,#ff9a3c,#ff7a00);box-shadow:0 10px 20px -10px rgba(255,122,0,.8)}
+#nav{background:#fff;box-shadow:0 -8px 24px -16px rgba(15,41,77,.35);border-top:none}#nav button.s{box-shadow:none}
+#stp{color:var(--mu)}
+.req{color:#ff7a00}.idt{background:#f2f5f9}
+.pg{padding-top:20px}
+
+/* ===== STACKED SECTIONS ===== */
+#tabs{display:none}.banner{top:84px}
+.pg{display:block!important;padding:0;background:#fff;border-radius:18px;box-shadow:0 2px 12px rgba(15,41,77,.07);margin-bottom:16px;scroll-margin-top:96px;animation:none!important;overflow:visible}
+.sh{display:flex;align-items:center;gap:14px;padding:18px 22px}
+.sn{flex:none;width:34px;height:34px;border-radius:50%;background:#287dfa;color:#fff;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+.stt{display:flex;flex-direction:column;line-height:1.2;min-width:120px}.stt b{font-size:1.05rem;color:#0f294d}.stt small{color:var(--mu);font-size:.8rem}
+.ssum{flex:1;display:flex;flex-wrap:wrap;gap:6px 8px;min-width:0}
+.sm{background:#eef5ff;color:#0f294d;border-radius:999px;padding:4px 12px;font-size:.8rem;display:inline-flex;gap:6px;max-width:100%}
+.sm i{font-style:normal;color:#5b6b82}.sm b{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.edit{display:none;margin:0;padding:7px 16px;font-size:.85rem;background:#fff;color:#287dfa;border:1.5px solid #287dfa;box-shadow:none}
+.pg.reach .edit{display:inline-block}.pg.reach .sn{background:#20b26b}
+.pg.up{opacity:.55}.pg.up .sn{background:#c4cfdd}
+.sb{display:none;padding:0 22px 24px;gap:16px;grid-template-columns:1fr}
+.pg.on .sb{display:grid;animation:fi .3s ease}.sb>h2{display:none}
+.pg.on>.sh{border-bottom:1px solid #edf1f7}
+.sb{padding-top:18px}.sb .q{box-shadow:none;border:1px solid #e8eef6;background:#fff;border-radius:14px}.sb .q:hover{box-shadow:none}
+@media(max-width:700px){.sh{flex-wrap:wrap;padding:14px 16px}.ssum{order:3;flex-basis:100%}.edit{margin-left:auto}.sb{padding:14px 14px 18px}}
+#nav{display:none!important}main{padding-bottom:48px}#toast{bottom:24px}
+.sf{display:flex;align-items:center;gap:14px;padding-top:16px;margin-top:4px;border-top:1px solid #edf1f7}
+.scnt{flex:1;text-align:center;color:var(--mu);font-size:.85rem}.scnt.ok{color:#20b26b;font-weight:600}
+.sf button{margin:0}.snx{min-width:170px}
+@media(max-width:600px){.sf{flex-wrap:wrap}.scnt{order:1;flex-basis:100%;text-align:left}.sbk{order:2}.snx,#sub{order:3;flex:1;min-width:0}}
+.sf button{white-space:nowrap}@media(max-width:600px){.sf button{padding:12px 16px;font-size:.92rem}}
+.rvtop{background:#eef5ff;border-radius:12px;padding:12px 16px;font-weight:700;color:#287dfa;margin:0 0 14px}
+.rvb{border:1px solid #e8eef6;border-radius:14px;padding:14px 18px;margin-bottom:12px}
+.rvh{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}.rvh b{color:#0f294d}
+.edit2{padding:6px 14px;font-size:.82rem;margin:0}
+.rvr{display:flex;gap:14px;padding:9px 0;border-top:1px solid #f0f3f8;font-size:.92rem}.rvr span{flex:0 0 36%;color:var(--mu)}.rvr b{flex:1;font-weight:600;word-break:break-word}.rvr b.miss{color:#d92d20}
+.rverr{background:#fff1f0;border:1px solid #f5c2bd;border-radius:14px;padding:14px 18px;margin-bottom:14px;color:#b42318}
+.rve{display:flex;gap:12px;justify-content:space-between;align-items:center;padding:9px 0;border-top:1px solid #f8d7d3;font-size:.9rem}.rve:first-of-type{margin-top:8px}
+.rve .edit2{flex:none;border-color:#b42318;color:#b42318}
+.rvok{background:#eafaf1;border:1px solid #bfe9d2;color:#14804a;border-radius:14px;padding:12px 18px;margin-bottom:14px;font-weight:700}
 </style>
 </head>
 <body>
 <main>
-<div id="top"><h1>उत्तर प्रदेश सर्वेक्षण प्रश्नावली<br><span class="h1e">Uttar Pradesh Survey Questionnaire</span></h1><div id="track"><div id="fill"></div></div><div id="stepl"></div></div>
+<div id="top"><h1>उत्तर प्रदेश सर्वेक्षण प्रश्नावली<br><span class="h1e">Uttar Pradesh Survey Questionnaire</span></h1><div id="tabs"></div><div id="track"><div id="fill"></div></div><div id="stepl"></div></div>
 <div class="open"><div class="otag">📣 प्रारंभिक स्क्रिप्ट / Opening Script</div>
 <p><b>हिंदी में प्रारंभिक स्क्रिप्ट</b></p>
 <p>नमस्ते! मेरा नाम ________ है। मैं लखनऊ विश्वविद्यालय के राजनीति विज्ञान विभाग का/की छात्र/छात्रा हूँ। अपने कॉलेज असाइनमेंट के तहत मैं उत्तर प्रदेश के वर्तमान राजनीतिक परिदृश्य और राजनीतिक एवं स्थानीय मुद्दों पर लोगों की राय जानने के लिए एक छोटा-सा सर्वे कर रहा/रही हूँ। इसमें सिर्फ 2 मिनट लगेंगे और आपकी कोई भी व्यक्तिगत जानकारी स्टोर नहीं की जाएगी। क्या मैं आपसे दो मिनट बात करके कुछ सवाल पूछ सकता/सकती हूँ?</p>
@@ -250,15 +325,78 @@ let pages=[],cp=0,lastK="";
  const intro=document.createElement("section");intro.className="pg";intro.appendChild(document.querySelector(".open"));intro.appendChild(document.querySelector(".main>.ins")||document.querySelector("main>.ins"));
  f.insertBefore(intro,f.firstChild);pages.unshift(intro);})();
 const TITLES=["परिचय / Introduction","प्रारंभिक / Screener","आपका क्षेत्र / Your area","राजनीतिक राय / Political opinion","पिछला मतदान / Past voting","आपके बारे में / About you","एजेंट विवरण / Agent details"];
+TITLES.push("समीक्षा और जमा करें / Review & Submit");
+{const rvp=document.createElement("section");rvp.className="pg";rvp.innerHTML='<div id="rv"></div>';f.appendChild(rvp);pages.push(rvp);}
+let maxR=0;
+const SL={Q0:"फ़ोन / Phone",Q1:"निवासी / Resident",Q12:"मुद्दा / Issue",Q6:"आज का वोट / Vote today",Q7:"मुख्यमंत्री / CM",Q8:"संतुष्टि / Satisfaction",Q13:"भाजपा नेता / BJP leader",Q14:"सपा नेता / SP leader",Q4:"लोकसभा 2024 / LS 2024",Q5:"विधानसभा 2022 / VS 2022",Q3:"आयु / Age",Q9:"धर्म / Religion",Q10:"श्रेणी / Category",Q11:"जाति / Caste",Q2:"लिंग / Gender"};
+pages.forEach((x,k)=>{const [hi,en]=TITLES[k].split(" / ");const sb=document.createElement("div");sb.className="sb";while(x.firstChild)sb.appendChild(x.firstChild);
+ const sh=document.createElement("div");sh.className="sh";
+ sh.innerHTML='<span class="sn"></span><div class="stt"><b></b><small></small></div><div class="ssum"></div><button type="button" class="edit">✎ बदलें / Edit</button>';
+ sh.querySelector("b").textContent=hi;sh.querySelector("small").textContent=en||"";
+ sh.querySelector(".edit").onclick=()=>{hist.push(cp);showPage(k);};
+
+ const ft=document.createElement("div");ft.className="sf";
+ ft.innerHTML='<button type="button" class="s sbk">← पीछे / Back</button><span class="scnt"></span><button type="button" class="snx">आगे / Continue →</button>';
+ ft.querySelector(".sbk").onclick=()=>document.getElementById("bk").onclick();
+ ft.querySelector(".snx").onclick=()=>document.getElementById("nx").onclick();
+ if(k==0){ft.querySelector(".sbk").style.display="none";ft.querySelector(".snx").textContent="शुरू करें / Start →";}
+ if(k==pages.length-2)ft.querySelector(".snx").textContent="समीक्षा करें / Review →";
+ if(k==pages.length-1){ft.querySelector(".snx").remove();ft.appendChild(pages[k-1].querySelector("#sub"));ft.querySelector(".scnt").textContent="जमा करने से पहले जाँच लें / Check before submitting";}
+ sb.appendChild(ft);
+ x.appendChild(sh);x.appendChild(sb);});
+function updateFooters(){pages.forEach(x=>{const qs=QS.filter(q=>x.querySelector("#c"+q.id));const c=x.querySelector(".scnt");if(!qs.length)return;
+ const d=qs.filter(q=>!qMiss([q]).length).length;c.textContent=d+" / "+qs.length+" उत्तर दिए / answered";c.classList.toggle("ok",d==qs.length);});}
+function qReason(q){const v=String(ans[q.id]||"").trim();
+ if(!v)return "उत्तर नहीं दिया / Not answered";
+ if(q.id=="Q0"&&v!==PD&&!/^[6-9]\d{9}$/.test(v))return "गलत फ़ोन नंबर (10 अंक, 6-9 से शुरू) / Invalid phone number (10 digits, starts with 6-9)";
+ if(q.other&&v===(q.ov||"Other")&&!String(oth[q.id]||"").trim())return "कृपया 'अन्य' बताएं / Please specify 'Other'";
+ return "";}
+const AGERR="3 अंकों की आईडी चाहिए / Needs a 3-digit ID";
+function allErrors(){const e=[];QS.forEach(q=>{const m=qReason(q);if(m)e.push({id:q.id,label:SL[q.id],msg:m,k:pages.findIndex(x=>x.querySelector("#c"+q.id))});});
+ if(!/^\d{3}$/.test(document.getElementById("agent").value))e.push({id:"Q15",label:"एजेंट आईडी / Agent ID",msg:AGERR,k:pages.findIndex(x=>x.querySelector("#cQ15"))});return e;}
+function renderReview(){const box=document.getElementById("rv");box.innerHTML="";const last=pages.length-1;
+ const top=document.createElement("div");top.className="rvtop";top.textContent="स्थिति / Status: "+build().SurveyStatus;box.appendChild(top);
+ const errs=allErrors(),pn=document.createElement("div");
+ if(errs.length){pn.className="rverr";pn.id="rverr";const hd=document.createElement("b");hd.textContent="⚠ "+errs.length+" बातें ठीक करें / "+errs.length+" issue(s) to fix before submitting";pn.appendChild(hd);
+  errs.forEach(x=>{const r=document.createElement("div");r.className="rve";const t=document.createElement("span");t.textContent=x.label+" — "+x.msg;
+   const bt=document.createElement("button");bt.type="button";bt.className="s edit2";bt.textContent="ठीक करें / Fix";
+   bt.onclick=()=>{hist.push(cp);showPage(x.k);setTimeout(()=>{if(x.id=="Q15"){const c=document.getElementById("cQ15");c.classList.add("err");c.scrollIntoView({behavior:"smooth",block:"center"});}else flag([{id:x.id}]);},350);};
+   r.appendChild(t);r.appendChild(bt);pn.appendChild(r);});}
+ else{pn.className="rvok";pn.textContent="✓ सभी जानकारी पूरी है / All details are complete";}
+ box.appendChild(pn);
+ for(let k=1;k<last;k++){const pgx=pages[k],blk=document.createElement("div");blk.className="rvb";
+  const h=document.createElement("div");h.className="rvh";const t=document.createElement("b");t.textContent=TITLES[k];
+  const e=document.createElement("button");e.type="button";e.className="s edit2";e.textContent="✎ बदलें / Edit";e.onclick=()=>{hist.push(cp);showPage(k);};h.appendChild(t);h.appendChild(e);blk.appendChild(h);
+  const rows=[];QS.filter(q=>pgx.querySelector("#c"+q.id)).forEach(q=>{let v=ans[q.id]||"";if(q.other&&v===(q.ov||"Other")&&oth[q.id])v+=": "+oth[q.id];rows.push([SL[q.id],v,qReason(q)]);});
+  if(pgx.querySelector("#cQ15")){const av=document.getElementById("agent").value;rows.push(["एजेंट आईडी / Agent ID",av,/^\d{3}$/.test(av)?"":AGERR]);const rm=document.getElementById("remarks").value.trim();rows.push(["टिप्पणी / Remarks",rm||"—",""]);}
+  rows.forEach(([l,v,rs])=>{const r=document.createElement("div");r.className="rvr";const a=document.createElement("span");a.textContent=l;const b=document.createElement("b");
+   if(rs){b.textContent=(v&&v!==PD?v+" — ":"")+rs;b.className="miss";}else{b.textContent=v;}r.appendChild(a);r.appendChild(b);blk.appendChild(r);});
+  box.appendChild(blk);}}
+function secDone(j){return !qMiss(QS.filter(q=>pages[j].querySelector("#c"+q.id))).length&&(!pages[j].querySelector("#cQ15")||/^\d{3}$/.test(document.getElementById("agent").value));}
+function renderSections(){maxR=Math.max(maxR,cp);if(cp==pages.length-1)renderReview();
+ pages.forEach((x,k)=>{const done=k<=maxR&&k!=cp;x.classList.toggle("up",k>maxR);x.classList.toggle("reach",done);
+  x.querySelector(".sn").textContent=done?"✓":k+1;const sm=x.querySelector(".ssum");sm.innerHTML="";
+  if(!done)return;
+  if(k==0){const e=document.createElement("span");e.className="sm";e.textContent="✓ स्क्रिप्ट पढ़ी गई / Script read";sm.appendChild(e);return;}
+  QS.filter(q=>x.querySelector("#c"+q.id)).forEach(q=>{let v=ans[q.id];if(!v)return;if(q.other&&v===(q.ov||"Other")&&oth[q.id])v+=": "+oth[q.id];
+   const e=document.createElement("span");e.className="sm";const i=document.createElement("i");i.textContent=SL[q.id];const b=document.createElement("b");b.textContent=v;e.appendChild(i);e.appendChild(b);sm.appendChild(e);});});}
+function renderTabs(){const t=document.getElementById("tabs");t.innerHTML="";
+ pages.forEach((x,k)=>{const [hi,en]=TITLES[k].split(" / ");const d=document.createElement("div");d.className="tab"+(k==cp?" on":k<cp?" done":"");
+  d.innerHTML='<span class="tn">'+(k<cp?"✓":k+1)+'</span><span class="tt"><b>'+hi+'</b><small>'+(en||"")+'</small></span>';t.appendChild(d);});
+ const a=t.querySelector(".on");if(a)t.scrollLeft=a.offsetLeft-t.clientWidth/2+a.clientWidth/2;}
 function showPage(i){cp=Math.max(0,Math.min(pages.length-1,i));pages.forEach((x,k)=>x.classList.toggle("on",k==cp));
  document.getElementById("fill").style.width=((cp+1)/pages.length*100)+"%";
  document.getElementById("stepl").textContent="Step "+(cp+1)+" of "+pages.length+" — "+TITLES[cp];
  document.getElementById("stp").textContent=(cp+1)+" / "+pages.length;
  document.getElementById("bk").disabled=cp==0;document.getElementById("nx").style.visibility=cp==pages.length-1?"hidden":"visible";
- window.scrollTo({top:0,behavior:"smooth"});}
+ renderSections();if(i!==0||maxR>0)pages[cp].scrollIntoView({behavior:"smooth",block:"start"});}
 let hist=[];document.getElementById("bk").onclick=()=>showPage(hist.length?hist.pop():cp-1);document.getElementById("nx").onclick=()=>{const miss=qMiss(QS.filter(q=>pages[cp].querySelector("#c"+q.id)));if(miss.length){flag(miss);return;}
+ const agc=pages[cp].querySelector("#cQ15");if(agc&&!/^\d{3}$/.test(document.getElementById("agent").value)){flag([]);agc.classList.add("err");agc.scrollIntoView({behavior:"smooth",block:"center"});toast("कृपया 3 अंकों की एजेंट आईडी दर्ज करें / Enter a 3-digit Agent ID");return;}
  const tq=pdIdx()>=0?QS[pdIdx()].id:(ans.Q1==="No"&&!auto.Q1?"Q1":null);
- hist.push(cp);showPage(tq&&pages[cp].querySelector("#c"+tq)?pages.length-1:cp+1);};
+ hist.push(cp);let nx=cp+1;
+ if(tq&&pages[cp].querySelector("#c"+tq))nx=pages.length-2;
+ else while(nx<pages.length-1&&nx<=maxR&&secDone(nx))nx++;
+ showPage(nx);};
 showPage(0);
 
 function pdIdx(){return QS.findIndex(q=>ans[q.id]===PD&&!auto[q.id]);}
@@ -326,7 +464,7 @@ function sync(){
   const ot=card.querySelector("[data-oth]");if(ot){ot.style.display=v===(q.ov||"Other")?"block":"none";ot.disabled=lock;if(lock)ot.value="";}
  });
  QS.filter(q=>q.search).forEach(q=>applyFilter(q.id));
- const k=p>=0?"p":ni>=0?"n":"";if(k&&k!==lastK){hist.push(cp);showPage(pages.length-1);}lastK=k;
+ const k=p>=0?"p":ni>=0?"n":"";if(k&&k!==lastK){hist.push(cp);showPage(pages.length-2);}lastK=k;updateFooters();
  const bn=document.getElementById("banner");bn.style.display=(p>=0||ni>=0)?"block":"none";bn.textContent=ni>=0?"🚫 रानीगंज निवासी नहीं — सर्वेक्षण समाप्त। कृपया एजेंट विवरण भरें। / Not a Raniganj resident — survey ended. Please fill the agent details.":"📵 फ़ोन डिस्कनेक्ट है — शेष प्रश्न लॉक हैं / Phone Disconnected — remaining questions are locked";
 }
 f.addEventListener("change",e=>{const t=e.target;
@@ -353,7 +491,7 @@ document.getElementById("sub").onclick=()=>{
  const bad=[];qMiss(QS).forEach(q=>{bad.push(q.id);document.getElementById("c"+q.id).classList.add("err");});
  if(ans.Q0&&ans.Q0!==PD&&!/^[6-9]\d{9}$/.test(ans.Q0)){bad.push("Q0 (गलत नंबर / invalid phone)");document.getElementById("cQ0").classList.add("err");}
  if(!/^\d{3}$/.test(document.getElementById("agent").value)){bad.push("Q15 (3 अंकों की आईडी / 3-digit Agent ID)");document.getElementById("cQ15").classList.add("err");}
- if(bad.length){showPage(pages.findIndex(x=>x.querySelector(".err")));alert("कृपया पूरा करें / Please complete: "+bad.join(", "));document.querySelector(".err").scrollIntoView({behavior:"smooth",block:"center"});return;}
+ if(bad.length){showPage(pages.length-1);renderReview();const pn2=document.getElementById("rverr");if(pn2)pn2.scrollIntoView({behavior:"smooth",block:"center"});toast("कृपया नीचे दी गई त्रुटियाँ ठीक करें / Please fix the errors listed");return;}
  const r=build();r._id=crypto.randomUUID();window._r=r;
  document.getElementById("done").style.display="block";document.getElementById("sub").style.display="none";f.style.display="none";document.getElementById("nav").style.display="none";document.getElementById("top").style.display="none";document.getElementById("banner").style.display="none";
  document.getElementById("done").scrollIntoView({behavior:"smooth"});saveNow();};
